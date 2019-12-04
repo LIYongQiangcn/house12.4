@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册会员</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script src="/layui/layui.js"></script>
+    <script src="/jquery-validation-1.14.0/lib/jquery.js"></script>
+    <script src="/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+</head>
+<body style="width: 100%;height: 100%;" background="\layui\css\plugin\1.jpg" >
+<div style="margin-top: 5%;">
+    <div class="layui-main" style="width: 700px;">
+        <h1 style="text-align: center;color: #00FF00">请输入注册信息</h1>
+        <form class="layui-form layui-form-pane" id="addForm">
+            <div class="layui-form-item">
+                <label class="layui-form-label">昵称</label>
+                <!--inline background="\layui\css\plugin\1.jpg"-->
+                <div class="layui-input-block">
+                    <input id="name" type="text" name="name"  placeholder="请输入昵称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码：</label>
+                <div class="layui-input-block">
+                    <input id="password" type="password" name="password" placeholder="密码不能小于4位数" class="layui-input"
+                           lay-verify="required"/>
+                </div>
+            </div>
+<!--            <div class="layui-form-item">-->
+<!--                <label class="layui-form-label">头像：</label>-->
+<!--                <div class="layui-input-block">-->
+<!--                    <input id="headportrait" type="text" name="headportrait" placeholder="请输入头像" class="layui-input"-->
+<!--                           lay-verify="required"/>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="layui-form-item">
+                <label class="layui-form-label">修改头像</label>
+                <div class="layui-input-inline uploadHeadImage">
+                    <div class="layui-upload-drag" id="headImg">
+                        <i class="layui-icon"></i>
+                        <p>点击上传图片，或将图片拖拽到此处</p>
+                    </div>
+                </div>
+                <div class="layui-input-inline">
+                    <div class="layui-upload-list">
+                        <img class="layui-upload-img headImage" src="http://t.cn/RCzsdCq" id="demo1">
+                        <p id="demoText"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">生日：</label>
+                <div class="layui-input-block">
+                    <input id="birthday" type="text" name="birthday" placeholder="请选择日期" class="layui-input"
+                           lay-verify="required"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别：</label>
+                <div class="layui-input-block">
+                    <input id="sex" type="text" name="sex" placeholder="请输入性别" class="layui-input"
+                           lay-verify="required"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱：</label>
+                <div class="layui-input-block">
+                    <input id="email" type="text" name="email" placeholder="请输入邮箱" class="layui-input"
+                           lay-verify="required"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号：</label>
+                <div class="layui-input-block">
+                    <input id="phone" type="text" name="phone" placeholder="请输入手机号" class="layui-input"
+                           lay-verify="required"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机验证码：</label>
+                <div class="layui-input-block">
+                    <input id="checkCode" type="text" name="checkCode" class="layui-input" lay-verify="required"/>
+                    <button id="sendCheckCode" type="button" class="layui-btn layui-btn-normal">获取验证码</button>
+                    <div class="layui-form-mid layui-word-aux">验证码有效期为2分钟</div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="register">确认</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--<script>-->
+<!--    //检查是否符合规定的输入要求-->
+<!--    // $().ready(function () {-->
+<!--    //     $("#addForm").validate();-->
+<!--    // });-->
+<!--</script>-->
+
+<script>
+    layui.use(["form",'laydate','upload'], function () {
+        var form = layui.form;
+        var $ = layui.$;
+        var laydate=layui.laydate;
+        var upload=layui.upload;
+
+        var uploadInst = upload.render({
+            elem: '#headImg'
+            , url: '/upload/headImg'
+            , size: 500
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+                //打印后台传回的地址: 把地址放入一个隐藏的input中, 和表单一起提交到后台, 此处略..
+                /*   console.log(res.data.src);*/
+                window.parent.uploadHeadImage(res.data.src);
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #8f8f8f;">上传成功!!!</span>');
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+        element.init();
+
+
+        laydate.render({
+            elem: '#birthday' //指定元素
+        });
+
+        $("#uemail").blur(function () {
+            var data = $("#uemail").serializeArray();
+            $.ajax({
+                url: "/user/check",
+                type: "POST",
+                data: data,
+                async: false,
+                success: function (data) {
+                    if (data == 1) {
+                        // alert("用户名已存在");
+                        layer.alert("用户名已存在，请直接登录");
+                    }
+                }
+
+            })
+        });
+        $("#upassword").blur(function () {
+            //判断密码长度
+            if (this.value.length < 4) {
+                layer.msg("密码长度不能小于4位");
+            }
+        });
+
+        form.on("submit(register)", function (data) {
+            var inputCheckCode = $("#checkCode").val();
+            var formData = new FormData($("#addForm")[0]);//获取填写表单数据
+            var pwdlength = $('#upassword').val();
+            if (inputCheckCode == checkCode) {
+                $.ajax({
+                    url: "/user/register",
+                    type: "POST",
+                    data: formData,
+                    async: false,
+                    contentType: false,   //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件
+                    processData: false,
+                    success: function (text) {
+                        if (text != null && text != "") {
+                            layer.alert("恭喜你成为会员,点击确认回到登录页面", function () {
+                                // window.location.href = "login.html";
+                                location.href="login";//注册成功后刷新父界面
+                            });
+                        }
+                        else {
+                            layer.alert("注册失败：用户名已存在，请更换用户名");
+                        }
+                    }
+                });
+            } else {
+                layer.msg("验证码输入错误");
+            }
+            return false;
+        });
+
+        //验证码
+        var checkCode = "";
+
+        $("#sendCheckCode").click(function () {
+            var phone = $("#phone").val();
+            if (phone == null || phone == "") {
+                layer.msg("请输入手机号！！！");
+                return;
+            }
+            var index = layer.open({
+                type: 3,
+                content: "短信发送中..."
+            });
+
+            $.ajax({
+                url: "/SendMessage",
+                type:"post",
+                data:{phone:phone},
+                // datatype:'json',
+                success: function (text) {
+                    if (text != null && text != "") {
+                        layer.close(index);
+                        layer.msg("验证码已发送，请查收");
+                        checkCode = text;
+                        countDown();
+                    } else {
+                        layer.alert("获取失败，请填写正确的电话号码")
+                        layer.close(index);
+                    }
+                }
+            });
+        });
+
+        var maxTime = 120;
+
+        function countDown() {
+            if (maxTime == 0) {
+                checkCode = "";
+                $("#sendCheckCode").removeClass("layui-btn-disabled");
+                $("#sendCheckCode").removeAttr("disabled")
+                $("#sendCheckCode").html("获取验证码");
+                maxTime = 120;
+            } else {
+                $("#sendCheckCode").attr("disabled", "disabled");
+                $("#sendCheckCode").addClass("layui-btn-disabled");
+                form.render();
+                $("#sendCheckCode").html(maxTime + "秒后重新获取");
+                maxTime--;
+                setTimeout(countDown, 1000);
+            }
+        }
+
+    });
+</script>
+</body>
+</html>
