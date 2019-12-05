@@ -10,4 +10,6 @@ public interface UserMapper {
     List<User> queryAll();
     int insertUser(User user);
     User userlogin(String phone,String password);
+    int deleteById(Integer uid);
+    int updateByUid(User user);
 }

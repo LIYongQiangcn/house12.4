@@ -26,4 +26,9 @@
         where phone= #{phone} and password= #{password}
     </select>
 
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from user
+        where uid=#{uid}
+    </delete>
+
 </mapper>

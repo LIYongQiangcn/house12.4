@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.common.Md5Util;
 import com.example.entity.User;
 import com.example.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,25 @@ public class UserService {
      * @return
      */
     public int addUser(User user){
+        //密码加密
+        String pwd = Md5Util.md5(user.getPassword());
+        user.setPassword(pwd);
         return userMapper.insertUser(user);
     }
 
+    /**
+     * 用户的删除
+     */
+    public int delete(Integer uid){
+        return userMapper.deleteById(uid);
+    }
+
+    /**
+     * 用户信息修改
+     */
+    public int update(User user){
+        return userMapper.updateByUid(user);
+    }
     /**
      * 用户登录
      */

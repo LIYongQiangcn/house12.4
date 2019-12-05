@@ -56,24 +56,35 @@ public class UserController {
     }
 
     /**
+     * 用户删除
+     */
+    @RequestMapping("/user/delete")
+    public int deleteUser(Integer uid){
+        try{
+            userService.delete(uid);
+            return 1;
+        }catch (Exception e){
+            return 0;
+        }
+    }
+
+    /**
+     * 用户信息修改保存
+     */
+    @RequestMapping("/user/update")
+    public int updateUser(User user){
+        try{
+            userService.update(user);
+            return 1;
+        }catch (Exception e){
+            return 0;
+        }
+    }
+
+    /**
      * 用户登录
      * , method = RequestMethod.POST,headers = "Accept=application/json"
      */
-//    @RequestMapping( value = "/user/login")
-//    public ModelAndView userlogin(Integer phone, String password, String verify, HttpSession session){
-//        ModelAndView mv = new ModelAndView();
-//        User user = userService.login(phone,password);
-//        //校验验证码
-//        String inputStr = verify;
-//        String random = (String) session.getAttribute("RANDOMVALIDATECODEKEY");
-//        //当查询的用户不为空，验证码校验正确才能成功登录，否则返回登录页面
-//        if (user != null && random.equals(inputStr)){
-//            mv.setViewName("loginsuccess");
-//        }else {
-//            mv.setViewName("loginfail");
-//        }
-//        return mv;
-//    }
     @RequestMapping(value = "/user/login")
     public int userlogin(String phone, String password, String verify, HttpSession session) {
         System.out.println(phone);
@@ -114,54 +125,5 @@ public class UserController {
         }
         return checkCode;
     }
-
-    /**
-     * 图片上传
-     */
-//    @RequestMapping(value = "/upload/headImg", method = {RequestMethod.POST})
-//    @ResponseBody
-//    public Object headImg(@RequestParam(value="file",required=false) MultipartFile file, HttpServletRequest request, HttpServletResponse response){
-//        String prefix = "";
-//        String dateStr = "";
-//        //保存上传
-//        OutputStream out = null;
-//        InputStream fileInput = null;
-//        try {
-//            if (file != null) {
-//                String originalName = file.getOriginalFilename();
-//                prefix = originalName.substring(originalName.lastIndexOf(".") + 1);
-//                dateStr = format.format(new Date());
-//                String filepath = request.getServletContext().getRealPath("/static") + uploadDir + dateStr + "." + prefix;
-//                filepath = filepath.replace("\\", "/");
-//                File files = new File(filepath);
-//                //打印查看上传路径
-//                System.out.println(filepath);
-//                if (!files.getParentFile().exists()) {
-//                    files.getParentFile().mkdirs();
-//                }
-//                file.transferTo(files);
-//            }
-//        } catch (Exception e) {
-//        } finally {
-//            try {
-//                if (out != null) {
-//                    out.close();
-//                }
-//                if (fileInput != null) {
-//                    fileInput.close();
-//                }
-//            } catch (IOException e) {
-//            }
-//        }
-//        Map<String, Object> map2 = new HashMap<>();
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("code", 0);
-//        map.put("msg", "");
-//        map.put("data", map2);
-//        map2.put("src", "../../../static" + uploadDir + dateStr + "." + prefix);
-//    }
-//
-
-
 
 }

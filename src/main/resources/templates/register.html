@@ -35,22 +35,17 @@
 <!--                           lay-verify="required"/>-->
 <!--                </div>-->
 <!--            </div>-->
+            <input type="hidden" name="headportrait" class="image">
             <div class="layui-form-item">
-                <label class="layui-form-label">修改头像</label>
-                <div class="layui-input-inline uploadHeadImage">
-                    <div class="layui-upload-drag" id="headImg">
-                        <i class="layui-icon"></i>
-                        <p>点击上传图片，或将图片拖拽到此处</p>
-                    </div>
-                </div>
-                <div class="layui-input-inline">
+                <label class="layui-form-label ">照片:</label>
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn" id="test1">上传图片</button>
+                    <p id="demoText"></p>
                     <div class="layui-upload-list">
-                        <img class="layui-upload-img headImage" src="http://t.cn/RCzsdCq" id="demo1">
-                        <p id="demoText"></p>
+                        <img class="layui-upload-img" id="demo1" style="width:100px;height:100px;">
                     </div>
                 </div>
             </div>
-
             <div class="layui-form-item">
                 <label class="layui-form-label">生日：</label>
                 <div class="layui-input-block">
@@ -111,39 +106,42 @@
         var laydate=layui.laydate;
         var upload=layui.upload;
 
+        //图片上传
+        //普通图片上传
         var uploadInst = upload.render({
-            elem: '#headImg'
-            , url: '/upload/headImg'
-            , size: 500
-            , before: function (obj) {
-                //预读本地文件示例，不支持ie8
-                obj.preview(function (index, file, result) {
-                    $('#demo1').attr('src', result); //图片链接（base64）
+            elem: '#test1'
+            ,url: '/upload/'
+            ,accept:'images'
+            ,size:50000
+            ,before: function(obj){
+
+                obj.preview(function(index, file, result){
+
+                    $('#demo1').attr('src', result);
                 });
             }
-            , done: function (res) {
+            ,done: function(res){
                 //如果上传失败
-                if (res.code > 0) {
+                if(res.code > 0){
                     return layer.msg('上传失败');
                 }
                 //上传成功
-                //打印后台传回的地址: 把地址放入一个隐藏的input中, 和表单一起提交到后台, 此处略..
-                /*   console.log(res.data.src);*/
-                window.parent.uploadHeadImage(res.data.src);
                 var demoText = $('#demoText');
-                demoText.html('<span style="color: #8f8f8f;">上传成功!!!</span>');
+                demoText.html('<span style="color: #4cae4c;">上传成功</span>');
+
+                var fileupload = $(".image");
+                fileupload.attr("value",res.data.src);
+                console.log(fileupload.attr("value"));
             }
-            , error: function () {
+            ,error: function(){
                 //演示失败状态，并实现重传
                 var demoText = $('#demoText');
-                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
-                demoText.find('.demo-reload').on('click', function () {
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
                     uploadInst.upload();
                 });
             }
         });
-        element.init();
-
 
         laydate.render({
             elem: '#birthday' //指定元素
