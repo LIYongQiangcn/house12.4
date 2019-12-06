@@ -23,14 +23,30 @@ public class PageController {
         return "loginfail";
     }
 
+    /**
+     * 用户列表页面
+     */
+    @RequestMapping("/user")
+    public String user(){
+        return "user";
+    }
+
 
     /**
-     * 主页面
+     * 前台主页面
      */
     @RequestMapping("/index")
     public String index(){
         return "index";
     }
+    /**
+     * 后台主页面
+     */
+    @RequestMapping("/main")
+    public String main(){
+        return "main";
+    }
+
     /**
      * 注册页面
      */

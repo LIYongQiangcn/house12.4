@@ -4,19 +4,15 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.example.entity.User;
 import com.example.service.UserService;
-import org.apache.ibatis.annotations.Param;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.*;
 
 import static com.example.common.SmsDemo.sendSms;
@@ -29,14 +25,31 @@ public class UserController {
     UserService userService;
 
     /**
-     * 用户全查询
-     *
+     * 用户查询
      * @return
      */
     @RequestMapping("/user/query")
-    public List<User> query() {
-        List<User> list = userService.query();
-        return list;
+    public Map<String, Object> query(@RequestParam(required = false, defaultValue = "") String name,
+                                     @RequestParam(required = false, defaultValue = "0") String type,
+                                     @RequestParam Integer page, @RequestParam Integer limit) {
+        //在查询之前pagehelper调用
+        PageHelper.startPage(page, limit);
+        List<User> list = new ArrayList<>();
+        if (type.equals("0")) {
+            list = userService.query(name);
+        }
+        //对查询后的数据进行包装
+        PageInfo pageInfo = new PageInfo(list);
+
+
+        //数据赋值
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 0);
+        map.put("msg", "操作成功");
+        map.put("count", pageInfo.getTotal());
+        map.put("data", pageInfo.getList());
+        return map;
+
     }
 
     /**
@@ -59,11 +72,11 @@ public class UserController {
      * 用户删除
      */
     @RequestMapping("/user/delete")
-    public int deleteUser(Integer uid){
-        try{
+    public int deleteUser(Integer uid) {
+        try {
             userService.delete(uid);
             return 1;
-        }catch (Exception e){
+        } catch (Exception e) {
             return 0;
         }
     }
@@ -72,11 +85,11 @@ public class UserController {
      * 用户信息修改保存
      */
     @RequestMapping("/user/update")
-    public int updateUser(User user){
-        try{
+    public int updateUser(User user) {
+        try {
             userService.update(user);
             return 1;
-        }catch (Exception e){
+        } catch (Exception e) {
             return 0;
         }
     }
@@ -114,12 +127,12 @@ public class UserController {
      * 发送短信
      */
     @RequestMapping(value = "/SendMessage")
-    public String send(String phone) throws ClientException{
-        String checkCode = String.valueOf(new Random().nextInt(899999)+100000);
-        System.out.println("手机验证码是"+checkCode);
+    public String send(String phone) throws ClientException {
+        String checkCode = String.valueOf(new Random().nextInt(899999) + 100000);
+        System.out.println("手机验证码是" + checkCode);
         try {
             //短信发送
-            SendSmsResponse response = sendSms(phone,checkCode);
+            SendSmsResponse response = sendSms(phone, checkCode);
         } catch (Exception e) {
             return "";
         }

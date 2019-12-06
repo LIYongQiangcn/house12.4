@@ -19,8 +19,8 @@ public class UserService {
      * 全查询
      * @return
      */
-    public List<User> query() {
-        return userMapper.queryAll();
+    public List<User> query(String name) {
+        return userMapper.queryAllByName(name);
     }
 
     /**
@@ -46,8 +46,9 @@ public class UserService {
      * 用户信息修改
      */
     public int update(User user){
-        return userMapper.updateByUid(user);
+        return userMapper.updateUserByUid(user);
     }
+
     /**
      * 用户登录
      */

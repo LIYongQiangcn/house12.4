@@ -7,9 +7,9 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    List<User> queryAll();
+    List<User> queryAllByName(String name);
     int insertUser(User user);
     User userlogin(String phone,String password);
     int deleteById(Integer uid);
-    int updateByUid(User user);
+    int updateUserByUid(User user);
 }

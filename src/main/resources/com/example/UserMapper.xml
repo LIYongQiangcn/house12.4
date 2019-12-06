@@ -11,8 +11,9 @@
         <result column="sex" jdbcType="VARCHAR" property="sex"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
     </resultMap>
-    <select id="queryAll" resultMap="BaseResultMap">
+    <select id="queryAllByName"  parameterType="java.lang.String"  resultMap="BaseResultMap">
         select * from user
+        where name LIKE "%"#{name}"%"
     </select>
 
     <insert id="insertUser" parameterType="com.example.entity.User">
@@ -30,5 +31,12 @@
         delete from user
         where uid=#{uid}
     </delete>
+
+    <update id="updateUserByUid" parameterType="com.example.entity.User">
+        update user
+        set name=#{name},phone=#{phone},password=#{password},
+        headportrait=#{headportrait},birthday=#{birthday},sex=#{sex},amail=#{email}
+        where uid=#{uid}
+    </update>
 
 </mapper>

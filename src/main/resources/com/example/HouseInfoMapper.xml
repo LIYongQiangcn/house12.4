@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.HouseInfoMapper">
+    <resultMap id="BaseResultMap" type="com.example.entity.HouseInfo">
+        <id column="hid" jdbcType="INTEGER" property="hid"/>
+        <result column="uid" jdbcType="VARCHAR" property="uid"/>
+        <result column="area" jdbcType="VARCHAR" property="area"/>
+        <result column="roomnum" jdbcType="VARCHAR" property="roomnum"/>
+        <result column="floor" jdbcType="VARCHAR" property="floor"/>
+        <result column="orientation" jdbcType="VARCHAR" property="orientation"/>
+        <result column="price" jdbcType="INTEGER" property="price"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="likecount" jdbcType="INTEGER" property="likecount"/>
+    </resultMap>
+
+    <insert id="insertHouse" parameterType="com.example.entity.HouseInfo">
+        insert into user(uid,area,roomnum,floor,orientation,price,status)
+        values (#{uid},#{area},#{roomnum},#{floor},#{orientation},#{price},#{status})
+    </insert>
+
+</mapper>
