@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.common.GetUids;
 import com.example.common.Md5Util;
 import com.example.entity.User;
 import com.example.mapper.UserMapper;
@@ -16,11 +17,19 @@ public class UserService {
     UserMapper userMapper;
 
     /**
-     * 全查询
+     * 根据名字查询
      * @return
      */
     public List<User> query(String name) {
-        return userMapper.queryAllByName(name);
+        return userMapper.queryByName(name);
+    }
+
+    /**
+     * 根据性别查询
+     * @return
+     */
+    public List<User> queryBySex(String sex) {
+        return userMapper.queryBySex(sex);
     }
 
     /**
@@ -36,10 +45,28 @@ public class UserService {
     }
 
     /**
-     * 用户的删除
+     * 用户单个删除
      */
     public int delete(Integer uid){
         return userMapper.deleteById(uid);
+    }
+
+    /**
+     * 用户批量删除
+     */
+    public int deleteNum(GetUids uids){
+//        int sum=0;
+//        for(Integer uid : uids){
+//            int result = delete(uid);
+//            sum += result;
+//        }
+//        if(sum==uids.length){
+//            return 1;
+//        }else {
+//            return 0;
+//        }
+          return userMapper.deleteUsers(uids);
+
     }
 
     /**

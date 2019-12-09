@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
+import com.example.common.GetUids;
 import com.example.entity.User;
 import com.example.service.UserService;
 import com.github.pagehelper.PageHelper;
@@ -25,18 +26,21 @@ public class UserController {
     UserService userService;
 
     /**
-     * 用户查询
+     * 用户查询：模糊查询+分页操作
      * @return
      */
     @RequestMapping("/user/query")
-    public Map<String, Object> query(@RequestParam(required = false, defaultValue = "") String name,
+    public Map<String, Object> query(@RequestParam(required = false, defaultValue = "") String content,
                                      @RequestParam(required = false, defaultValue = "0") String type,
                                      @RequestParam Integer page, @RequestParam Integer limit) {
         //在查询之前pagehelper调用
         PageHelper.startPage(page, limit);
         List<User> list = new ArrayList<>();
+        //判断，如果是0则是通过名字进行模糊查询
         if (type.equals("0")) {
-            list = userService.query(name);
+            list = userService.query(content);
+        }else{
+            list = userService.queryBySex(content);
         }
         //对查询后的数据进行包装
         PageInfo pageInfo = new PageInfo(list);
@@ -79,6 +83,31 @@ public class UserController {
         } catch (Exception e) {
             return 0;
         }
+    }
+
+    /**
+     * 用户批量删除
+     */
+    @RequestMapping("/user/deleteUsers")
+    public int deleteUsers(GetUids uids) {
+        System.out.println(uids);
+//        try {
+//            for (int i=0;i<a.length;i++){
+//                Integer uid = Integer.valueOf(a[i]);
+//                userService.delete(uid);
+//            }
+//            return 1;
+//        } catch (Exception e) {
+//            return 0;
+//        }
+        try{
+            userService.deleteNum(uids);
+            return 1;
+        }catch (Exception e){
+            return 0;
+        }
+
+
     }
 
     /**

@@ -11,9 +11,13 @@
         <result column="sex" jdbcType="VARCHAR" property="sex"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
     </resultMap>
-    <select id="queryAllByName"  parameterType="java.lang.String"  resultMap="BaseResultMap">
+    <select id="queryByName"  parameterType="java.lang.String"  resultMap="BaseResultMap">
         select * from user
         where name LIKE "%"#{name}"%"
+    </select>
+    <select id="queryBySex"  parameterType="java.lang.String"  resultMap="BaseResultMap">
+        select * from user
+        where sex LIKE "%"#{sex}"%"
     </select>
 
     <insert id="insertUser" parameterType="com.example.entity.User">
@@ -30,6 +34,12 @@
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from user
         where uid=#{uid}
+    </delete>
+    <delete id="deleteUsers">
+        delete from user
+        where id in 
+        <foreach item="uid" collection="list" open="(" close=")" separator=","></foreach>
+        #{uid}
     </delete>
 
     <update id="updateUserByUid" parameterType="com.example.entity.User">
