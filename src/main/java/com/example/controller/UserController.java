@@ -8,6 +8,8 @@ import com.example.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import org.apache.ibatis.annotations.Param;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -88,26 +90,21 @@ public class UserController {
     /**
      * 用户批量删除
      */
-    @RequestMapping("/user/deleteUsers")
-    public int deleteUsers(GetUids uids) {
-        System.out.println(uids);
-//        try {
-//            for (int i=0;i<a.length;i++){
-//                Integer uid = Integer.valueOf(a[i]);
-//                userService.delete(uid);
-//            }
-//            return 1;
-//        } catch (Exception e) {
-//            return 0;
-//        }
+    @RequestMapping(value = "/user/deleteUsers")
+    public int deleteUsers(String[] uids) {
+        int[] ids = new int[uids.length];
+        for(int i=0;i<uids.length;i++){
+            ids[i] = Integer.parseInt(uids[i]);
+        }
         try{
-            userService.deleteNum(uids);
+            for(int j=0;j<uids.length;j++)
+            {
+                userService.delete(ids[j]);
+            }
             return 1;
         }catch (Exception e){
-            return 0;
+            return  0;
         }
-
-
     }
 
     /**

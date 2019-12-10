@@ -54,7 +54,7 @@ public class UserService {
     /**
      * 用户批量删除
      */
-    public int deleteNum(GetUids uids){
+    public int deleteNum(List<Integer> uids){
 //        int sum=0;
 //        for(Integer uid : uids){
 //            int result = delete(uid);

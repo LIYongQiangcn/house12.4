@@ -138,27 +138,39 @@
                 parent.layer.msg('请先选择要删除的数据行！', {icon: 2});
                 return;
             }
-            alert(data[0].uid);
             var uids = "";
-            for (var i = 0; i < data.length; i++) {
-                uids += data[i].uid + ",";
+            for (var i = 0; i <= data.length-1; i++) {
+                if(i<data.length-1){
+                    uids += data[i].uid + ",";
+                }else{
+                    uids += data[i].uid
+                }
+
             }
             alert(uids);
             switch (obj.event) {
                 case 'delAll':
-                    $.ajax({
-                        type: 'post',
-                        url: '/user/deleteUsers',
-                        data: uids,
-                        successs: function (data) {
-                            if (data == 1) {
-                                alert("删除成功");
-                            } else {
-                                alert("删除失败");
+                    layer.confirm('确定删除吗?', function (index) {
+                        $.ajax({
+                            type: 'post',//提交方式
+                            url: '/user/deleteUsers',//访问后台的地址   查询所有的岗位信息
+                            async: false,//  true：异步     false:同步
+                            dataType: "json",//数据类型
+                            data: {uids:uids},
+                            success: function (da) {
+                                if (da == 1) {
+                                    layer.msg('已删除!', {
+                                        icon: 1, time: 1000, end: function () {
+                                            window.location.reload();
+                                        }
+                                    });
+                                } else {
+                                    layer.msg('删除失败');
+                                }
                             }
+                        });
 
-                        }
-                    })
+                    });
                     break;
             }
             ;
