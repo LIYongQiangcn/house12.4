@@ -19,6 +19,10 @@
         select * from user
         where sex LIKE "%"#{sex}"%"
     </select>
+    <select id="queryByPhone"  parameterType="java.lang.String"  resultMap="BaseResultMap">
+        select * from user
+        where phone LIKE "%"#{phone}"%"
+    </select>
 
     <insert id="insertUser" parameterType="com.example.entity.User">
         insert into user(name,phone,password,headportrait,birthday,sex,email)

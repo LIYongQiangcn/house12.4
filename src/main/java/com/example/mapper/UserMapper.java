@@ -11,6 +11,7 @@ import java.util.List;
 public interface UserMapper {
     List<User> queryByName(String name);
     List<User> queryBySex(String sex);
+    List<User> queryByPhone(String phone);
     int insertUser(User user);
     User userlogin(String phone,String password);
     int deleteById(Integer uid);

@@ -35,6 +35,7 @@
                     <select name="type" id="type">
                         <option value="0">用户名</option>
                         <option value="1">性别</option>
+                        <option value="2">电话号码</option>
                     </select>
                 </div>
                 <div class="layui-input-inline">
@@ -94,6 +95,7 @@
             title: '用户表',
             toolbar: '#titlebutton',
             page: true,
+            // limits:[5,8,15],
             cols: [
                 [ //表头
                     {
@@ -106,8 +108,11 @@
                     }, {
                     field: 'name',
                     title: '用户名'
-                }
-                    , {
+                }, {
+                    field: 'headportrait',
+                    title: '头像',
+                    templet: "#imgtmp"
+                },{
                     field: 'sex',
                     title: '性别'
                 }, {
@@ -117,6 +122,11 @@
             ]
             // ,id:'usertable'
         });
+        // {
+        //     field: 'headportrait',
+        //         title: '头像',
+        //     templet: "#imgtmp"
+        // },
 
         //模糊查询事件
         $("#BtnSearchUserInfo").on("click", function () {
@@ -182,7 +192,6 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr;
             //console.log(obj)
-            alert(data.uid);
             switch (layEvent) {
                 case 'like':
                     layer.confirm('确定删除吗?', function (index) {
@@ -212,13 +221,13 @@
                     layer.open(
                         {
                             type: 2,
-                            title: '查看博文',
+                            title: '查看信息',
                             shadeClose: true,//点击其他地方关闭弹层
                             maxmin: true,
                             shade: 0.3,  //设置透明度 ，默认 0.3
                             fixed: false,//不固定弹框 可以随意拖动
                             area: ['880px', '600px'],
-                            content: 'admin/articles-look',//跳转的页面 js获取// 'user-edit.html?id='+data.uid
+                            content: 'user-edit',//跳转的页面 js获取// 'user-edit.html?id='+data.uid
                             success: function (layero, index) {
                                 // 获取子页面的iframe
                                 var iframe = window['layui-layer-iframe' + index];
@@ -230,12 +239,33 @@
             }
         });
 
+
+
     });
 </script>
+<!--<script type="text/javascript">-->
+<!--    layui.use(['jquery','layer'],function () {-->
+<!--        var $ = layui.jquery;-->
+<!--        var layer = layui.laypage;-->
+
+<!--        function showimg(t) {-->
+<!--            var t = $(t).find("img");-->
+<!--            layer.open({-->
+<!--                type: 1,-->
+<!--                title: false,-->
+<!--                closeBtn: 0,-->
+<!--                area: '516px',-->
+<!--                skin: 'layui-layer-nobg', //没有背景色-->
+<!--                shadeClose: true,-->
+<!--                content: '<div style="text-align:center"><img src="' + $(t).attr('src') + '" /></div>'-->
+<!--            });-->
+<!--        }-->
+<!--    })-->
+<!--</script>-->
 
 <!--头像显示路径配置-->
 <script type="text/html" id="imgtmp">
-    <img src="/ioReadImage/{{d.headportrait}}" style="width:108px;height:100px;"/>
+        <img src="/ioReadImage/{{d.headportrait}}"  style="width:50px;height:50px;"/>
 </script>
 </body>
 </html>

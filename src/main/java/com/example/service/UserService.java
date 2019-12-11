@@ -33,6 +33,14 @@ public class UserService {
     }
 
     /**
+     * 根据性别查询
+     * @return
+     */
+    public List<User> queryByPhone(String phone) {
+        return userMapper.queryByPhone(phone);
+    }
+
+    /**
      * 添加注册用户
      * @param user
      * @return
@@ -55,16 +63,6 @@ public class UserService {
      * 用户批量删除
      */
     public int deleteNum(List<Integer> uids){
-//        int sum=0;
-//        for(Integer uid : uids){
-//            int result = delete(uid);
-//            sum += result;
-//        }
-//        if(sum==uids.length){
-//            return 1;
-//        }else {
-//            return 0;
-//        }
           return userMapper.deleteUsers(uids);
 
     }

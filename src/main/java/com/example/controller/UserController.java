@@ -41,8 +41,10 @@ public class UserController {
         //判断，如果是0则是通过名字进行模糊查询
         if (type.equals("0")) {
             list = userService.query(content);
-        }else{
+        }else if(type.equals("1")){
             list = userService.queryBySex(content);
+        }else {
+            list = userService.queryByPhone(content);
         }
         //对查询后的数据进行包装
         PageInfo pageInfo = new PageInfo(list);

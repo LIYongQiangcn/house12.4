@@ -30,6 +30,10 @@ public class PageController {
     public String user(){
         return "user";
     }
+    @RequestMapping("/user-edit")
+    public String lookuser(){
+        return "user-edit";
+    }
 
 
     /**
