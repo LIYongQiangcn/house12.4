@@ -2,7 +2,7 @@
 <html lang="en"xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>用户编辑</title>
+    <title>头像修改</title>
     <link rel="stylesheet" href="/layui/css/layui.css">
     <script src="/layui/layui.js"></script>
 </head>
@@ -10,64 +10,21 @@
 <body>
 <form class="layui-form" action="" id="editForm">
     <input type="hidden" name="uid" id="inputuid" />
-    <div class="layui-form-item">
-        <label class="layui-form-label">用户名:</label>
-        <div class="layui-input-inline">
-            <input type="text" name="name" id="inputname" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+        <div class="layui-form-item">
+            <label class="layui-form-label">图片地址</label>
+            <div class="layui-input-inline">
+                <input type="text" name="headportrait" autocomplete="off" class="layui-input image">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">性别:</label>
-        <div class="layui-input-inline">
-            <input type="text" name="sex" id="inputsex"  placeholder="请输入标题" autocomplete="off" class="layui-input">
+        <div class="layui-form-item">
+            <label class="layui-form-label ">照片:</label>
+            <div class="layui-input-block">
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="demo1"  style="width:100px;height:100px;">
+                </div>
+                <button type="button" class="layui-btn" id="test1">上传图片</button>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">电话号码:</label>
-        <div class="layui-input-inline">
-            <input type="text" name="phone" id="inputphone"  placeholder="请输入电话号码" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">密码:</label>
-        <div class="layui-input-inline">
-            <input type="text" name="password" id="inputpassword"  placeholder="请输入电话号码" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-<!--    <div class="layui-form-item">-->
-<!--        <label class="layui-form-label">头像</label>-->
-<!--        <div class="layui-input-inline">-->
-<!--            <input type="text" name="headportrait" id="inputheadportrait"  placeholder="请输入电话号码" autocomplete="off" class="layui-input">-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="layui-form-item">-->
-<!--        <label class="layui-form-label">图片地址</label>-->
-<!--        <div class="layui-input-inline">-->
-<!--            <input type="text" name="headportrait"  id="inputheadportrait" placeholder="请输入电话号码" autocomplete="off" class="layui-input image">-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="layui-form-item">-->
-<!--        <label class="layui-form-label ">照片:</label>-->
-<!--        <div class="layui-input-block">-->
-<!--            <div class="layui-upload-list">-->
-<!--                <img class="layui-upload-img" id="demo1"  style="width:100px;height:100px;">-->
-<!--            </div>-->
-<!--            <button type="button" class="layui-btn" id="test1">上传图片</button>-->
-<!--        </div>-->
-<!--    </div>-->
-    <div class="layui-form-item">
-        <label class="layui-form-label">生日:</label>
-        <div class="layui-input-inline">
-            <input type="text" name="birthday" id="inputbirthday"  placeholder="请输入电话号码" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">邮箱:</label>
-        <div class="layui-input-inline">
-            <input type="text" name="email" id="inputemail"  placeholder="请输入电话号码" autocomplete="off" class="layui-input">
-        </div>
-    </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit="" lay-filter="edit-btn">立即提交</button>
@@ -89,13 +46,7 @@
             console.log(data);
             //给编辑表单赋值
             $("#inputuid").val(data.uid);
-            $("#inputname").val(data.name);
-            $("#inputsex").val(data.sex);
             $("#inputphone").val(data.phone);
-            $("#inputpassword").val(data.password);
-            $("#inputheadportrait").val(data.headportrait);
-            $("#inputbirthday").val(data.birthday);
-            $("#inputemail").val(data.email);
 
             $(document).ready(function(){
                 $('#demo1').attr('src','/ioReadImage/'+data.headportrait);
@@ -149,9 +100,7 @@
             }
         });
         //laydate
-        laydate.render({
-            elem: '#inputbirthday' //指定元素
-        });
+
         //监听提交
         form.on('submit(edit-btn)', function() {
             var formData =  new FormData($("#editForm")[0]);//获取填写表单数据
@@ -159,7 +108,7 @@
                 cache : true,
                 type : "post",
                 dataType:"json",
-                url : "/user/update",
+                url : "/user/headportraitupdate",
                 async : false,
                 data : formData,  // 你的formid，传参数到后台
                 contentType: false,  //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件

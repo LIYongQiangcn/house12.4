@@ -21,11 +21,11 @@
     </style>
 </head>
 <body>
-<div class="layui-tab layui-tab-brief">
-    <ul class="layui-tab-title">
-        <li class="layui-this">用户列表</li>
-    </ul>
-</div>
+<!--<div class="layui-tab layui-tab-brief">-->
+<!--    <ul class="layui-tab-title">-->
+<!--        <li class="layui-this">用户列表</li>-->
+<!--    </ul>-->
+<!--</div>-->
 <div style="width: 100%">
     <div class="layui-input-inline">
         <form class="layui-form">
@@ -69,6 +69,9 @@
 </script>
 <!--按钮的设置 onclick="updateButton()" -->
 <script type="text/html" id="barDemo">
+    <button type="button" lay-event="editphoto" class="layui-btn layui-btn-normal layui-btn-xs  layui-btn-sm"><i
+            class="layui-icon">&#xe642;</i>修改头像
+    </button>
     <button type="button" lay-event="edit" class="layui-btn layui-btn-normal layui-btn-xs  layui-btn-sm"><i
             class="layui-icon">&#xe642;</i>详情
     </button>
@@ -104,21 +107,26 @@
                     },
                     {
                         field: 'uid',
-                        title: 'ID'
+                        title: 'ID',
+                        width:200
                     }, {
                     field: 'name',
-                    title: '用户名'
+                    title: '用户名',
+                    width:200
                 }, {
                     field: 'headportrait',
                     title: '头像',
-                    templet: "#imgtmp"
+                    templet: "#imgtmp",
+                    width: 200
                 },{
                     field: 'sex',
-                    title: '性别'
+                    title: '性别',
+                    width: 200
                 }, {
                     field: 'phone',
-                    title: '电话号码'
-                }, {fixed: 'right', width: 165, align: 'center', toolbar: '#barDemo'}]
+                    title: '电话号码',
+                    width:200
+                }, {fixed: 'right', width: 272, align: 'center', toolbar: '#barDemo'}]
             ]
             // ,id:'usertable'
         });
@@ -221,13 +229,32 @@
                     layer.open(
                         {
                             type: 2,
-                            title: '查看信息',
+                            title: '编辑',
                             shadeClose: true,//点击其他地方关闭弹层
                             maxmin: true,
                             shade: 0.3,  //设置透明度 ，默认 0.3
                             fixed: false,//不固定弹框 可以随意拖动
-                            area: ['880px', '600px'],
+                            area: ['600px', '450px'],
                             content: 'user-edit',//跳转的页面 js获取// 'user-edit.html?id='+data.uid
+                            success: function (layero, index) {
+                                // 获取子页面的iframe
+                                var iframe = window['layui-layer-iframe' + index];
+                                // 向子页面的全局函数child传参
+                                iframe.child(data);
+                            }
+                        })
+                    break;
+                case 'editphoto':
+                    layer.open(
+                        {
+                            type: 2,
+                            title: '编辑',
+                            shadeClose: true,//点击其他地方关闭弹层
+                            maxmin: true,
+                            shade: 0.3,  //设置透明度 ，默认 0.3
+                            fixed: false,//不固定弹框 可以随意拖动
+                            area: ['400px', '400px'],
+                            content: 'headportrait',//跳转的页面 js获取// 'user-edit.html?id='+data.uid
                             success: function (layero, index) {
                                 // 获取子页面的iframe
                                 var iframe = window['layui-layer-iframe' + index];
@@ -238,34 +265,12 @@
                     break;
             }
         });
-
-
-
     });
 </script>
-<!--<script type="text/javascript">-->
-<!--    layui.use(['jquery','layer'],function () {-->
-<!--        var $ = layui.jquery;-->
-<!--        var layer = layui.laypage;-->
-
-<!--        function showimg(t) {-->
-<!--            var t = $(t).find("img");-->
-<!--            layer.open({-->
-<!--                type: 1,-->
-<!--                title: false,-->
-<!--                closeBtn: 0,-->
-<!--                area: '516px',-->
-<!--                skin: 'layui-layer-nobg', //没有背景色-->
-<!--                shadeClose: true,-->
-<!--                content: '<div style="text-align:center"><img src="' + $(t).attr('src') + '" /></div>'-->
-<!--            });-->
-<!--        }-->
-<!--    })-->
-<!--</script>-->
 
 <!--头像显示路径配置-->
 <script type="text/html" id="imgtmp">
-        <img src="/ioReadImage/{{d.headportrait}}"  style="width:50px;height:50px;"/>
+        <img src="/ioReadImage/{{d.headportrait}}"  style="width:25px;height:25px;"/>
 </script>
 </body>
 </html>

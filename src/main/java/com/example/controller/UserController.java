@@ -123,6 +123,19 @@ public class UserController {
     }
 
     /**
+     * 用户头像修改保存
+     */
+    @RequestMapping("/user/headportraitupdate")
+    public int updatePhoto(User user) {
+        try {
+            userService.updateHead(user);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    /**
      * 用户登录
      * , method = RequestMethod.POST,headers = "Accept=application/json"
      */

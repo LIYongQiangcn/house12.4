@@ -75,6 +75,13 @@ public class UserService {
     }
 
     /**
+     * 头像修改
+     */
+    public int updateHead(User user){
+        return userMapper.updateUserPorByUid(user);
+    }
+
+    /**
      * 用户登录
      */
     public User login(String phone,String password){

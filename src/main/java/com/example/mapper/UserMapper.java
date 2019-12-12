@@ -17,4 +17,5 @@ public interface UserMapper {
     int deleteById(Integer uid);
     int deleteUsers(List<Integer> uids);
     int updateUserByUid(User user);
+    int updateUserPorByUid(User user);
 }

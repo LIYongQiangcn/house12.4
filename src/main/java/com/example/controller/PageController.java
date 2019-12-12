@@ -34,6 +34,10 @@ public class PageController {
     public String lookuser(){
         return "user-edit";
     }
+    @RequestMapping("/headportrait")
+    public String lookphoto(){
+        return "headportrait";
+    }
 
 
     /**
