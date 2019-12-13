@@ -14,6 +14,25 @@ public class PageController {
     @Autowired
     private HttpSession session;
 
+    /**
+     * 前台主页面
+     */
+    @RequestMapping("/index")
+    public String index(){
+        return "index";
+    }
+    /**
+     * 后台主页面
+     */
+    @RequestMapping("/main")
+    public String main(Model m){
+        User user =  (User)session.getAttribute("loginUser");
+        session.setAttribute("name",user.getName());
+
+        return "main";
+    }
+
+
 
     /**
      * 用户相关页面
@@ -30,6 +49,13 @@ public class PageController {
     @RequestMapping("/loginfail")
     public String loginfail(){
         return "loginfail";
+    }
+    /**
+     * 注册页面
+     */
+    @RequestMapping("/register")
+    public String register(){
+        return "register";
     }
 
 
@@ -56,30 +82,18 @@ public class PageController {
     }
 
 
-
     /**
-     * 前台主页面
+     * 房屋列表页面
      */
-    @RequestMapping("/index")
-    public String index(){
-        return "index";
+    @RequestMapping("/houseinfo")
+    public String house(){
+        return  "houseinfo";
     }
-    /**
-     * 后台主页面
-     */
-    @RequestMapping("/main")
-    public String main(Model m){
-        User user =  (User)session.getAttribute("loginUser");
-        session.setAttribute("name",user.getName());
-
-        return "main";
+    @RequestMapping("/houseinfo-look")
+    public String houselook(){
+        return  "houseinfo-look";
     }
 
-    /**
-     * 注册页面
-     */
-    @RequestMapping("/register")
-    public String register(){
-        return "register";
-    }
+
+
 }

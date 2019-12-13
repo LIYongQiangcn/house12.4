@@ -9,13 +9,48 @@ package com.example.entity;
 public class HouseInfo {
     Integer hid;
     Integer uid;
+    String city;
+    String region;
+    String village;
     String area;
     String roomnum;
     String floor;
     String orientation;
     Integer price;
     Integer status;
-    Integer likecoount;
+    Integer likecount;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getVillage() {
+        return village;
+    }
+
+    public void setVillage(String village) {
+        this.village = village;
+    }
+
+    public Integer getLikecount() {
+        return likecount;
+    }
+
+    public void setLikecount(Integer likecount) {
+        this.likecount = likecount;
+    }
 
     public Integer getHid() {
         return hid;
@@ -81,11 +116,7 @@ public class HouseInfo {
         this.status = status;
     }
 
-    public Integer getLikecoount() {
-        return likecoount;
-    }
 
-    public void setLikecoount(Integer likecoount) {
-        this.likecoount = likecoount;
-    }
+
+
 }

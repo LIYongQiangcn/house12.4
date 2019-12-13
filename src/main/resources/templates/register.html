@@ -35,7 +35,7 @@
 <!--                           lay-verify="required"/>-->
 <!--                </div>-->
 <!--            </div>-->
-            <input type="text" name="headportrait" class="image">
+            <input type="hidden" name="headportrait" class="image">
             <div class="layui-form-item">
                 <label class="layui-form-label ">照片:</label>
                 <div class="layui-input-block">
@@ -147,33 +147,35 @@
             elem: '#birthday' //指定元素
         });
 
-        $("#uemail").blur(function () {
-            var data = $("#uemail").serializeArray();
-            $.ajax({
-                url: "/user/check",
-                type: "POST",
-                data: data,
-                async: false,
-                success: function (data) {
-                    if (data == 1) {
-                        // alert("用户名已存在");
-                        layer.alert("用户名已存在，请直接登录");
-                    }
-                }
+        // $("#uemail").blur(function () {
+        //     var data = $("#uemail").serializeArray();
+        //     $.ajax({
+        //         url: "/user/check",
+        //         type: "POST",
+        //         data: data,
+        //         async: false,
+        //         success: function (data) {
+        //             if (data == 1) {
+        //                 // alert("用户名已存在");
+        //                 layer.alert("用户名已存在，请直接登录");
+        //             }
+        //         }
+        //
+        //     })
+        // });
 
-            })
-        });
-        $("#upassword").blur(function () {
-            //判断密码长度
-            if (this.value.length < 4) {
-                layer.msg("密码长度不能小于4位");
-            }
-        });
+        // $("#upassword").blur(function () {
+        //     //判断密码长度
+        //     if (this.value.length < 4) {
+        //         layer.msg("密码长度不能小于4位");
+        //     }
+        // });
 
         form.on("submit(register)", function (data) {
             var inputCheckCode = $("#checkCode").val();
             var formData = new FormData($("#addForm")[0]);//获取填写表单数据
-            var pwdlength = $('#upassword').val();
+
+
             if (inputCheckCode == checkCode) {
                 $.ajax({
                     url: "/user/register",
@@ -182,8 +184,8 @@
                     async: false,
                     contentType: false,   //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件
                     processData: false,
-                    success: function (text) {
-                        if (text != null && text != "") {
+                    success: function (data) {
+                        if (data==1) {
                             layer.alert("恭喜你成为会员,点击确认回到登录页面", function () {
                                 // window.location.href = "login.html";
                                 location.href="login";//注册成功后刷新父界面

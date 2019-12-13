@@ -4,6 +4,9 @@
     <resultMap id="BaseResultMap" type="com.example.entity.HouseInfo">
         <id column="hid" jdbcType="INTEGER" property="hid"/>
         <result column="uid" jdbcType="VARCHAR" property="uid"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="region" jdbcType="VARCHAR" property="region"/>
+        <result column="village" jdbcType="VARCHAR" property="village"/>
         <result column="area" jdbcType="VARCHAR" property="area"/>
         <result column="roomnum" jdbcType="VARCHAR" property="roomnum"/>
         <result column="floor" jdbcType="VARCHAR" property="floor"/>
@@ -14,8 +17,25 @@
     </resultMap>
 
     <insert id="insertHouse" parameterType="com.example.entity.HouseInfo">
-        insert into user(uid,area,roomnum,floor,orientation,price,status)
+        insert into houseinfo(uid,area,roomnum,floor,orientation,price,status)
         values (#{uid},#{area},#{roomnum},#{floor},#{orientation},#{price},#{status})
     </insert>
+
+    <delete id="deleteHouseByHid" parameterType="java.lang.Integer">
+        delete from houseinfo
+        where hid=#{hid}
+    </delete>
+
+    <update id="updateHouse" parameterType="com.example.entity.HouseInfo">
+        update houseinfo
+        set area=#{area},roomnum=#{roomnum},floor=#{floor},orientation=#{orientation},price=#{price}
+        where hid=#{hid}
+    </update>
+
+    <select id="selectHouse" resultMap="BaseResultMap">
+        select * from houseinfo
+    </select>
+
+
 
 </mapper>

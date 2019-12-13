@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>房源编辑</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script src="/layui/layui.js"></script>
+</head>
+
+<body>
+<form class="layui-form" action="" id="editForm">
+    <input type="hidden" name="hid" id="inputhid" />
+    <input type="hidden" name="uid" id="inputuid" />
+    <div class="layui-form-item">
+        <label class="layui-form-label">城市:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="city" id="inputcity" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">地区:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="region" id="inputregion"  placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">具体地址:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="village" id="inputvillage"  placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">房屋面积:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="area" id="inputarea"  placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">房屋数量</label>
+        <div class="layui-input-inline">
+            <input type="text" name="roomnum" id="inputroomnum"  placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="edit-btn">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+
+</form>
+
+<!--<script type="text/html" id="imgtmp">-->
+<!--    <img src="/ioReadImage/{{data.headportrait}}" style="width:50px;height:50px;"/>-->
+<!--</script>-->
+<script th:inline="none">
+    function child(data) {
+        layui.use(['form', 'jquery'], function () {
+            var form = layui.form;
+            var $ = layui.jquery;
+
+            console.log(data);
+            //给编辑表单赋值
+            $("#inputhid").val(data.hid);
+            $("#inputuid").val(data.uid);
+            $("#inputcity").val(data.city);
+            $("#inputregion").val(data.region);
+            $("#inputvillage").val(data.village);
+            $("#inputarea").val(data.area);
+            $("#inputroomnum").val(data.roomnum);
+            $(document).ready(function(){
+                $('#demo1').attr('text',data.city);
+            })
+            form.render();
+        });
+    }
+</script>
+
+</body>
+</html>
