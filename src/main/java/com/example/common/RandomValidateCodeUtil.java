@@ -20,7 +20,7 @@ public class RandomValidateCodeUtil {
     private int width = 95;// 图片宽
     private int height = 25;// 图片高
     private int lineSize = 40;// 干扰线数量
-    private int stringNum = 4;// 随机产生字符数量
+    private int stringNum = 1;// 随机产生字符数量
 
 //    private static final Logger logger = LoggerFactory.getLogger(RandomValidateCodeUtil.class);
 

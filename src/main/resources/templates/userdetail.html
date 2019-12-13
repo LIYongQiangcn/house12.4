@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户编辑</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script src="/layui/layui.js"></script>
+</head>
+
+<body>
+<div class="layui-container">
+    <div class="layui-row">
+<!--    border-right: 1px solid #cccccc; 竖边框横线    -->
+        <div class="layui-col-xs4 " style="padding: 0 20px;font-size: 16px;line-height: 1.8;margin-top: 14px;border-right: 1px solid #cccccc;height: 400px" >
+            <div style="text-align: left;padding: 20px 20px; ">
+                <img th:src="'/ioReadImage/'+${user.headportrait}" style="width:110px;height:110px;" class="layui-circle">
+                <span></span>
+                </img>
+
+            </div>
+            <ul  style="text-align: left;padding: 10px 20px; ">
+                <li >电话：<span th:text="${user.phone}" ></span></li>
+                <li >名称：<span th:text="${user.name}" th:title="${user.name}"></span></li>
+                <li >性别：<span th:text="${user.sex}" th:title="${user.sex}"></span></li>
+                <li >生日：<span th:text="${user.birthday}" th:title="${user.birthday}"></span></li>
+            </ul>
+        </div>
+        <div class="layui-col-xs8" style="margin-top: 14px;padding: 20px 10px 10px 10px">
+            <form class="layui-form" action=""  method="post" id="editForm">
+                <input type="hidden" name="uid" th:value="${user.uid}" id="inputuid" />
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="name" th:value="${user.name}" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">电话</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="phone" th:value="${user.phone}" lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <input type="hidden" name="password" th:value="${user.password}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">邮箱</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="email" th:value="${user.email}" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="sex" th:value="${user.sex}" lay-verify="required" placeholder="请输入性别" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">生日</label>
+                    <div class="layui-inline">
+                        <!-- 注意：这一层元素并不是必须的 -->
+                        <input type="text" name="birthday" th:value="${user.birthday}" class="layui-input" placeholder="请选择日期" id="inputtime">
+                    </div>
+                </div>
+                <hr>
+                <div class="layui-form-item" style="padding: 10px 0px">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" style="width: 200px" lay-submit="" lay-filter="edit-btn" >保存</button>
+<!--                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>-->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['form', 'laydate','upload','jquery','layer'], function() {
+        var form = layui.form;
+        var laydate = layui.laydate;
+        var upload = layui.upload;
+        var layer = layui.layer;
+        var $ = layui.jquery;
+
+        //laydate
+        laydate.render({
+            elem: '#inputtime' //指定元素
+        });
+
+        //监听提交
+        form.on('submit(edit-btn)', function() {
+            var formData =  new FormData($("#editForm")[0]);//获取填写表单数据
+            // var formData = $("#editForm").serializeArray();
+            $.ajax({
+                cache : true,
+                type : "post",
+                dataType:"json",
+                url : "/user/update",
+                async : false,
+                data : formData,  // 你的formid，传参数到后台
+                contentType: false,  //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件
+                processData: false,  //当设置为true的时候,jquery ajax 提交的时候不会序列化 data，而是直接使用da
+                success : function(data){ //data后台return的值
+                    if (data==1) {
+                        layer.msg('修改成功!', {
+                            icon: 1, time: 1000, end: function () {
+                                window.location.reload();//修改成功后刷新父界面
+                            }
+                        });
+                    } else {
+                        alert("失败");
+                    }
+                },
+            });
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>

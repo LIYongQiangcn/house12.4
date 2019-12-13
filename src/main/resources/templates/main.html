@@ -12,14 +12,13 @@
         <div class="layui-logo">layuiAdmin</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
-            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="main">主页面</a></li>
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <!--            th:text="${session.username}"        -->
-                    <p class="layui-side-user-name">李永强</p>
+                    <p class="layui-side-user-name" th:text="${session.name}"></p>
                 </a>
                 <dl class="layui-nav-child">
                     <!--                    <button onclick="add()">1111</button>-->
@@ -63,14 +62,7 @@
             </ul>
         </div>
     </div>
-    <!--    &lt;!&ndash;内容主题区域&ndash;&gt;-->
-    <!--    <div class="layui-body">-->
-    <!--        <ul class="layui-tab-title"></ul>-->
-    <!--    <div style="padding: 0px;">-->
-    <!--        <iframe class="layadmin-iframe ifrem_voice"  src="" width="100%" height="700px"frameborder="0" name="main" scrolling="no"></iframe>-->
-    <!--    </div>-->
-    <!--    </div>-->
-    <!--    &lt;!&ndash;内容主题区域&ndash;&gt;-->
+
     <div class="layui-body">
         <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowclose="true">
             <ul class="layui-tab-title"></ul>
@@ -83,23 +75,6 @@
     </div>
 </div>
 <script src="/layui/layui.js"></script>
-<script>
-    // //添加按钮跳转
-    // function add() {
-    //     layui.use('layer',function () {
-    //         var layer = layui.layer;
-    //         alert(1111);
-    //         var index = layer.open({
-    //             type:2, //type 2表示iframe弹窗类型；layer type一般为5种类型
-    //             area: ['700px', '450px'],
-    //             fixed: false, //不固定
-    //             maxmin: true,
-    //             title:"添加用户",
-    //             content: 'user-add' //iframe展示当前页面
-    //         });
-    //     });
-    // }
-</script>
 
 <script>
     layui.use(['element', 'layer', 'jquery'], function () {

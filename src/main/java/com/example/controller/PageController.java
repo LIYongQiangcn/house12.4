@@ -1,10 +1,19 @@
 package com.example.controller;
 
+import com.example.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class PageController {
+
+    @Autowired
+    private HttpSession session;
+
 
     /**
      * 用户相关页面
@@ -23,12 +32,19 @@ public class PageController {
         return "loginfail";
     }
 
+
     /**
      * 用户列表页面
      */
     @RequestMapping("/user")
     public String user(){
         return "user";
+    }
+    @RequestMapping("/userdetail")
+    public String userdetail(Model model){
+        User user =  (User)session.getAttribute("loginUser");
+        model.addAttribute("user",user);
+        return "userdetail";
     }
     @RequestMapping("/user-edit")
     public String lookuser(){
@@ -38,6 +54,7 @@ public class PageController {
     public String lookphoto(){
         return "headportrait";
     }
+
 
 
     /**
@@ -51,7 +68,10 @@ public class PageController {
      * 后台主页面
      */
     @RequestMapping("/main")
-    public String main(){
+    public String main(Model m){
+        User user =  (User)session.getAttribute("loginUser");
+        session.setAttribute("name",user.getName());
+
         return "main";
     }
 

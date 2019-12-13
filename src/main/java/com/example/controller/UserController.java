@@ -141,11 +141,13 @@ public class UserController {
      */
     @RequestMapping(value = "/user/login")
     public int userlogin(String phone, String password, String verify, HttpSession session) {
-        System.out.println(phone);
-        System.out.println(password);
-        System.out.println(verify);
+//        System.out.println(phone);
+//        System.out.println(password);
+//        System.out.println(verify);
         ModelAndView mv = new ModelAndView();
         User user = userService.login(phone, password);
+
+        session.setAttribute("loginUser",user);
         //校验验证码
         String inputStr = verify;
         String random = (String) session.getAttribute("RANDOMVALIDATECODEKEY");

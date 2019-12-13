@@ -17,9 +17,10 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">性别:</label>
-        <div class="layui-input-inline">
-            <input type="text" name="sex" id="inputsex"  placeholder="请输入标题" autocomplete="off" class="layui-input">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+            <input type="radio" id="radio1" name="sex" value="男" title="男">
+            <input type="radio" id="radio2" name="sex" value="女" title="女" checked>
         </div>
     </div>
     <div class="layui-form-item">
@@ -35,27 +36,6 @@
             <input type="text" name="password" id="inputpassword"  placeholder="请输入电话号码" autocomplete="off" class="layui-input">
         </div>
     </div>
-<!--    <div class="layui-form-item">-->
-<!--        <label class="layui-form-label">头像</label>-->
-<!--        <div class="layui-input-inline">-->
-<!--            <input type="text" name="headportrait" id="inputheadportrait"  placeholder="请输入电话号码" autocomplete="off" class="layui-input">-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="layui-form-item">-->
-<!--        <label class="layui-form-label">图片地址</label>-->
-<!--        <div class="layui-input-inline">-->
-<!--            <input type="text" name="headportrait"  id="inputheadportrait" placeholder="请输入电话号码" autocomplete="off" class="layui-input image">-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="layui-form-item">-->
-<!--        <label class="layui-form-label ">照片:</label>-->
-<!--        <div class="layui-input-block">-->
-<!--            <div class="layui-upload-list">-->
-<!--                <img class="layui-upload-img" id="demo1"  style="width:100px;height:100px;">-->
-<!--            </div>-->
-<!--            <button type="button" class="layui-btn" id="test1">上传图片</button>-->
-<!--        </div>-->
-<!--    </div>-->
     <div class="layui-form-item">
         <label class="layui-form-label">生日:</label>
         <div class="layui-input-inline">
@@ -90,7 +70,11 @@
             //给编辑表单赋值
             $("#inputuid").val(data.uid);
             $("#inputname").val(data.name);
-            $("#inputsex").val(data.sex);
+            if (data.sex == '男'){
+                $("#radio1").attr("checked",true);
+            } else{
+                $("#radio2").attr("checked",true);
+            }
             $("#inputphone").val(data.phone);
             $("#inputpassword").val(data.password);
             $("#inputheadportrait").val(data.headportrait);
