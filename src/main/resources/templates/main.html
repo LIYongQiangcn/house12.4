@@ -17,8 +17,8 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <!--            th:text="${session.username}"        -->
-                    <p class="layui-side-user-name" th:text="${session.name}"></p>
+                    <!--           th:text="${session.name}"     -->
+                    <p class="layui-side-user-name" >基本资料</p>
                 </a>
                 <dl class="layui-nav-child">
                     <!--                    <button onclick="add()">1111</button>-->
@@ -47,6 +47,13 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" data-id="1" data-title="用户列表" data-url="user"
                                class="site-demo-active" data-type="tabAdd">用户列表</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;">房屋管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" data-id="2" data-title="添加房源" data-url="houseadd"
+                               class="site-demo-active" data-type="tabAdd">添加房源</a></dd>
                     </dl>
                 </li>
                 <!--                <li class="layui-nav-item layui-nav-itemed" th:each="m,iterStat:${menu}">-->
@@ -130,7 +137,7 @@
                 element.tabAdd('demo', {
                     title: name,
                     content: '<iframe data-frameid="' + id + '" scrolling="auto" frameborder="0" src="' + url +
-                        '" style="width:100%;height:100%;background-image: url("/plugin/image/back.jpg")" ></iframe>',
+                        '" style="width:100%;height:100%;background-image: url("/uploads/allimg/171102/1-1G1021242230-L.jpg")" ></iframe>',
                     id: id //规定好的id
                 })
                 FrameWH(); //计算ifram层的大小

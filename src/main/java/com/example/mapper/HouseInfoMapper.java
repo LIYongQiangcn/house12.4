@@ -15,4 +15,5 @@ import java.util.List;
 public interface HouseInfoMapper {
     int insertHouse(HouseInfo houseInfo);
     List<HouseInfo> selectHouse();
+    List<HouseInfo> queryById();
 }

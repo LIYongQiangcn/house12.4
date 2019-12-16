@@ -33,4 +33,8 @@ public class HouseInfoService {
     public List<HouseInfo> query(){
         return houseInfoMapper.selectHouse();
     }
+
+    public List<HouseInfo> query2(){
+        return houseInfoMapper.queryById();
+    }
 }

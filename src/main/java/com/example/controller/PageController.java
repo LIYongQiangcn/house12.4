@@ -26,9 +26,8 @@ public class PageController {
      */
     @RequestMapping("/main")
     public String main(Model m){
-        User user =  (User)session.getAttribute("loginUser");
-        session.setAttribute("name",user.getName());
-
+//        User user =  (User)session.getAttribute("loginUser");
+//        session.setAttribute("name",user.getName());
         return "main";
     }
 
@@ -92,6 +91,14 @@ public class PageController {
     @RequestMapping("/houseinfo-look")
     public String houselook(){
         return  "houseinfo-look";
+    }
+    @RequestMapping("/housephotos")
+    public String housePhotos(){
+        return  "housephotos";
+    }
+    @RequestMapping("/houseadd")
+    public String addhouse(){
+        return  "houseadd";
     }
 
 

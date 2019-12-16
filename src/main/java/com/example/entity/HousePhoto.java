@@ -8,8 +8,16 @@ package com.example.entity;
  */
 public class HousePhoto {
     Integer pid;
-    Integer hid;
+    Integer phid;
     String photo;
+
+    public Integer getPhid() {
+        return phid;
+    }
+
+    public void setPhid(Integer phid) {
+        this.phid = phid;
+    }
 
     public Integer getPid() {
         return pid;
@@ -17,14 +25,6 @@ public class HousePhoto {
 
     public void setPid(Integer pid) {
         this.pid = pid;
-    }
-
-    public Integer getHid() {
-        return hid;
-    }
-
-    public void setHid(Integer hid) {
-        this.hid = hid;
     }
 
     public String getPhoto() {

@@ -3,7 +3,9 @@
 <mapper namespace="com.example.mapper.HouseInfoMapper">
     <resultMap id="BaseResultMap" type="com.example.entity.HouseInfo">
         <id column="hid" jdbcType="INTEGER" property="hid"/>
-        <result column="uid" jdbcType="VARCHAR" property="uid"/>
+        <result column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
         <result column="city" jdbcType="VARCHAR" property="city"/>
         <result column="region" jdbcType="VARCHAR" property="region"/>
         <result column="village" jdbcType="VARCHAR" property="village"/>
@@ -12,13 +14,24 @@
         <result column="floor" jdbcType="VARCHAR" property="floor"/>
         <result column="orientation" jdbcType="VARCHAR" property="orientation"/>
         <result column="price" jdbcType="INTEGER" property="price"/>
+        <result column="text" jdbcType="VARCHAR" property="text"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="likecount" jdbcType="INTEGER" property="likecount"/>
+        <collection property="housePhotos" ofType="HousePhoto">
+            <id column="pid" jdbcType="INTEGER" property="pid" />
+            <result column="photo" jdbcType="VARCHAR" property="photo" />
+        </collection>
     </resultMap>
+    <!--关联查询：一个房源，有多张照片-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select *
+        from houseinfo,housephoto
+        where hid=phid
+    </select>
 
     <insert id="insertHouse" parameterType="com.example.entity.HouseInfo">
-        insert into houseinfo(uid,area,roomnum,floor,orientation,price,status)
-        values (#{uid},#{area},#{roomnum},#{floor},#{orientation},#{price},#{status})
+        insert into houseinfo(uid,title,province,city,region,village,area,roomnum,floor,orientation,price,text)
+        values (#{uid},#{title},#{province},#{city},#{region},#{village},#{area},#{roomnum},#{floor},#{orientation},#{price},#{text})
     </insert>
 
     <delete id="deleteHouseByHid" parameterType="java.lang.Integer">

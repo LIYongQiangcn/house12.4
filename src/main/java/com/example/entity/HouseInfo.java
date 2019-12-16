@@ -1,5 +1,7 @@
 package com.example.entity;
 
+import java.util.Set;
+
 /**
  * @author {李永强}
  * @Title HouseInfo
@@ -7,18 +9,56 @@ package com.example.entity;
  * @date 2019/12/5
  */
 public class HouseInfo {
-    Integer hid;
-    Integer uid;
-    String city;
-    String region;
-    String village;
-    String area;
-    String roomnum;
-    String floor;
-    String orientation;
-    Integer price;
-    Integer status;
-    Integer likecount;
+    private Integer hid;
+    private Integer uid;
+    private String title;
+    private String province;
+    private String city;
+    private String region;
+    private String village;
+    private String area;
+    private String roomnum;
+    private String floor;
+    private String orientation;
+    private Integer price;
+    private Integer status;
+    private Integer likecount;
+    private String text;
+    private Set<HousePhoto> housePhotos;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+
+
+    public Set<HousePhoto> getHousePhotos() {
+        return housePhotos;
+    }
+
+    public void setHousePhotos(Set<HousePhoto> housePhotos) {
+        this.housePhotos = housePhotos;
+    }
 
     public String getCity() {
         return city;

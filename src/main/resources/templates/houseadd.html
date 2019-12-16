@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加房源</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="/css/select.css" />
+    <script src="/layui/layui.js"></script>
+</head>
+
+<body>
+<form class="layui-form" action="" id="addForm" style="padding: 10px;">
+    <input type="hidden" name="hid" />
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title"  placeholder="请输入房源出售标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" id="addressDiv">
+        <label class="layui-form-label">省份</label>
+        <div class="layui-input-inline">
+            <select name="P1" lay-filter="province" id="province">
+                <option></option>
+            </select>
+        </div>
+        <label class="layui-form-label">城市</label>
+        <div class="layui-input-inline">
+            <select name="C1" lay-filter="city" id="city">
+                <option></option>
+            </select>
+        </div>
+        <label class="layui-form-label">区域</label>
+        <div class="layui-input-inline">
+            <select name="A1" lay-filter="area" id="area">
+                <option></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">具体地址</label>
+        <div class="layui-input-inline" style="width: 450px">
+            <input type="text" name="village"  placeholder="请输入具体地址" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">房屋面积</label>
+        <div class="layui-input-inline">
+            <input type="text" name="area"  placeholder="请输入房屋面积" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">房间数量</label>
+        <div class="layui-input-inline">
+            <input type="text" name="roomnum"  placeholder="请输入房间数量" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">楼层</label>
+        <div class="layui-input-inline">
+            <input type="text" name="floor"  placeholder="请输入楼层" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">朝向</label>
+        <div class="layui-input-inline">
+            <input type="text" name="orientation"  placeholder="请输入朝向" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">价格</label>
+        <div class="layui-input-inline">
+            <input type="text" name="price"  placeholder="请输入价格" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-inline">
+            <input type="text" name="roomnum"  placeholder="补充描述" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    layui.config({
+        base: './js/'//拓展模块的根目录
+    }).extend({
+        pca: 'pca'
+    });
+
+
+    //使用自定义的插件pca
+    layui.use(['form', 'layedit', 'laydate', 'upload', "jquery", "pca"], function () {
+        var $ = layui.$
+            , form = layui.form
+            , pca = layui.pca;
+        //带初始值进行初始化
+        pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', '全部', '全部', '全部');
+
+        //不带初始值
+        // pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]');
+
+        //输入提示
+        $("#address").bind('input propertychange', function () {
+                var address = document.getElementById("address").value;
+                if (address == "") {
+                    document.getElementById("addressTip").style.display = "none";
+                    return;
+                }
+                var html = '';
+                var province = document.getElementById("province").value;
+                if (province == "全部") {
+                    province = '';
+                }
+                var city = document.getElementById("city").value;
+                if (city == "全部") {
+                    city = '';
+                }
+                var area = document.getElementById("area").value;
+                if (area == "全部") {
+                    area = '';
+                }
+
+                //查询关键字
+                var keywords = province + city + area + address;
+
+                //此处使用的是自定义高德地图服务，可以根据情况进行修改
+                $.ajax({
+                    type: "POST",
+                    url: "http://127.0.0.1:5050/map/inputTip.json",
+                    cache: false,
+                    async: false,
+                    data: {
+                        "keywords": keywords
+                    },
+                    dataType: "json",
+                    contentType: 'application/x-www-form-urlencoded',
+                    headers: { 'Authorization': 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50IjoiMTg4MTQ4NjgzOTUiLCJ1c2VySWQiOjYyMH0.llXwj27uSclj1ZcZ9nnzZVqBF7yI_LcS8PDCdUXzTBU' },
+                    success: function (json) {
+                        var data = json.data.tips;//json数组
+                        for (var i = 0; i < data.length; i++) {
+                            html += '<dd lay-value="" class="addressDd" onclick="ddclick(this)">' + data[i].name + '<span style="color:#9c9a9a;font-size:5px;">&nbsp' + data[i].address + '</span>' + '</dd>';
+                        }
+                    }
+                });
+
+                document.getElementById("addressTip").innerHTML = html;
+                var s = document.getElementById("addressTip").innerHTML;
+                if (html == "") {
+                    document.getElementById("addressTip").style.display = "none";
+                } else {
+                    document.getElementById("addressTip").style.display = "block";
+                }
+
+                var lis = document.getElementById("addressDetail").getElementsByTagName("dd");
+                for (var i = 0; i < lis.length; i++) {
+                    if (lis[i].tagName == "DD") {
+                        lis[i].onclick = (function () {//增加单击事件
+                                return function () {
+                                    document.getElementById("address").value = this.innerText.trim().split(/\s+/)[0];
+                                    document.getElementById("addressTip").style.display = "none";
+                                }
+                            }
+                        )
+                        (i);
+                    }
+
+                }
+
+            }
+        );
+
+    });
+    // //Demo
+    // layui.use(['form', 'laydate','upload','jquery','layer'], function() {
+    //     var form = layui.form;
+    //     var $ = layui.jquery;
+    //     var laydate = layui.laydate;
+    //     var upload = layui.upload;
+    //     var layer = layui.layer;
+    //
+    //     //laydate
+    //     laydate.render({
+    //         elem: '#test1' //指定元素
+    //     });
+    //
+    //     //添加按钮保存:添加用户
+    //     form.on('submit(formDemo)', function() {
+    //         var formData =  new FormData($("#addForm")[0]);//获取填写表单数据
+    //         // var formData = $("#addForm").serializeArray();
+    //         $.ajax({
+    //             cache : true,
+    //             type : "post",
+    //             dataType:"json",
+    //             url : "/articles/add",
+    //             async : false,
+    //             data : formData,  // 你的formid，传参数到后台
+    //             contentType: false,   //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件
+    //             processData: false,  //当设置为true的时候,jquery ajax 提交的时候不会序列化 data，而是直接使用da
+    //             success : function(data){ //data后台return的值
+    //                 if (data==1) {
+    //                     // layer.msg('hello');
+    //                     alert("成功");
+    //                     window.parent.location.reload();//修改成功后刷新父界面
+    //
+    //                 } else {
+    //                     alert("失败");
+    //                 }
+    //             },
+    //         });
+    //         return false;
+    //     });
+    //
+    //
+    // });
+</script>
+
+</body>
+</html>

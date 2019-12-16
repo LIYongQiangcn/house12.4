@@ -70,5 +70,11 @@ public class HouseInfoController {
         return map;
     }
 
+    @RequestMapping("/house/query2")
+    public List<HouseInfo> query2(){
+        List<HouseInfo> list = houseInfoService.query2();
+        return list;
+    }
+
 
 }
