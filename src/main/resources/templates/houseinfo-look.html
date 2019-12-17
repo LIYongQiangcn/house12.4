@@ -4,41 +4,74 @@
     <meta charset="UTF-8">
     <title>房源编辑</title>
     <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="/css/select.css" />
     <script src="/layui/layui.js"></script>
 </head>
 
 <body>
 <form class="layui-form" action="" id="editForm">
-    <input type="hidden" name="hid" id="inputhid" />
-    <input type="hidden" name="uid" id="inputuid" />
+    <input type="hidden" name="hid" id="inputhid"/>
+    <input type="hidden" name="uid" id="inputuid"/>
     <div class="layui-form-item">
-        <label class="layui-form-label">城市:</label>
+        <label class="layui-form-label">标题:</label>
         <div class="layui-input-inline">
-            <input type="text" name="city" id="inputcity" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="title" id="inputtitle" placeholder="请输入房源出售标题" autocomplete="off" class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-item" id="addressDiv">
         <label class="layui-form-label">地区:</label>
         <div class="layui-input-inline">
-            <input type="text" name="region" id="inputregion"  placeholder="请输入" autocomplete="off" class="layui-input">
+            <select name="province" lay-filter="province" id="province">
+                <option></option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <select name="city" lay-filter="city" id="city">
+                <option></option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <select name="region" lay-filter="area" id="area">
+                <option></option>
+            </select>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">具体地址:</label>
-        <div class="layui-input-inline">
-            <input type="text" name="village" id="inputvillage"  placeholder="请输入" autocomplete="off" class="layui-input">
+        <div class="layui-input-inline" style="width: 450px">
+            <input type="text" name="village" id="inputvillage"  placeholder="请输入具体地址" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">房屋面积:</label>
+        <label class="layui-form-label">面积:(平方)</label>
         <div class="layui-input-inline">
-            <input type="text" name="area" id="inputarea"  placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="area" id="inputarea" placeholder="请输入房屋面积" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">房间情况:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="roomnum" id="inputroomnum" placeholder="请输入房间数量" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">房屋数量</label>
+        <label class="layui-form-label">楼层:</label>
         <div class="layui-input-inline">
-            <input type="text" name="roomnum" id="inputroomnum"  placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="floor" id="inputfloor" placeholder="请输入楼层" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">朝向:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="orientation" id="inputorientation" placeholder="请输入朝向" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">价格:(每月)</label>
+        <div class="layui-input-inline">
+            <input type="text" name="price" id="inputprice"  placeholder="请输入价格" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-inline">
+            <input type="text" name="text" id="inputtext" placeholder="补充描述" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -55,6 +88,96 @@
 <!--</script>-->
 <script th:inline="none">
     function child(data) {
+        layui.config({
+            base: './js/'//拓展模块的根目录
+        }).extend({
+            pca: 'pca'
+        });
+
+
+        //使用自定义的插件pca
+        layui.use(['form', 'layedit', 'laydate', 'upload', "jquery", "pca"], function () {
+            var $ = layui.$
+                , form = layui.form
+                , pca = layui.pca;
+            //带初始值进行初始化
+            pca.init('select[name=province]', 'select[name=city]', 'select[name=region]', data.province, data.city, data.region);
+
+            //不带初始值
+            // pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]');
+
+            //输入提示
+            $("#address").bind('input propertychange', function () {
+                    var address = document.getElementById("address").value;
+                    if (address == "") {
+                        document.getElementById("addressTip").style.display = "none";
+                        return;
+                    }
+                    var html = '';
+                    var province = document.getElementById("province").value;
+                    if (province == "全部") {
+                        province = '';
+                    }
+                    var city = document.getElementById("city").value;
+                    if (city == "全部") {
+                        city = '';
+                    }
+                    var area = document.getElementById("area").value;
+                    if (region == "全部") {
+                        area = '';
+                    }
+
+                    //查询关键字
+                    var keywords = province + city + area + address;
+
+                    //此处使用的是自定义高德地图服务，可以根据情况进行修改
+                    $.ajax({
+                        type: "POST",
+                        url: "http://127.0.0.1:5050/map/inputTip.json",
+                        cache: false,
+                        async: false,
+                        data: {
+                            "keywords": keywords
+                        },
+                        dataType: "json",
+                        contentType: 'application/x-www-form-urlencoded',
+                        headers: { 'Authorization': 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50IjoiMTg4MTQ4NjgzOTUiLCJ1c2VySWQiOjYyMH0.llXwj27uSclj1ZcZ9nnzZVqBF7yI_LcS8PDCdUXzTBU' },
+                        success: function (json) {
+                            var data = json.data.tips;//json数组
+                            for (var i = 0; i < data.length; i++) {
+                                html += '<dd lay-value="" class="addressDd" onclick="ddclick(this)">' + data[i].name + '<span style="color:#9c9a9a;font-size:5px;">&nbsp' + data[i].address + '</span>' + '</dd>';
+                            }
+                        }
+                    });
+
+                    document.getElementById("addressTip").innerHTML = html;
+                    var s = document.getElementById("addressTip").innerHTML;
+                    if (html == "") {
+                        document.getElementById("addressTip").style.display = "none";
+                    } else {
+                        document.getElementById("addressTip").style.display = "block";
+                    }
+
+                    var lis = document.getElementById("addressDetail").getElementsByTagName("dd");
+                    for (var i = 0; i < lis.length; i++) {
+                        if (lis[i].tagName == "DD") {
+                            lis[i].onclick = (function () {//增加单击事件
+                                    return function () {
+                                        document.getElementById("address").value = this.innerText.trim().split(/\s+/)[0];
+                                        document.getElementById("addressTip").style.display = "none";
+                                    }
+                                }
+                            )
+                            (i);
+                        }
+
+                    }
+
+                }
+            );
+
+        });
+
         layui.use(['form', 'jquery'], function () {
             var form = layui.form;
             var $ = layui.jquery;
@@ -63,17 +186,56 @@
             //给编辑表单赋值
             $("#inputhid").val(data.hid);
             $("#inputuid").val(data.uid);
-            $("#inputcity").val(data.city);
-            $("#inputregion").val(data.region);
+            $("#inputtitle").val(data.title);
+            $("#province").val(data.province);
+            $("#city").val(data.city);
+            $("#area").val(data.region);
             $("#inputvillage").val(data.village);
             $("#inputarea").val(data.area);
             $("#inputroomnum").val(data.roomnum);
-            $(document).ready(function(){
-                $('#demo1').attr('text',data.city);
-            })
+            $("#inputfloor").val(data.floor);
+            $("#inputorientation").val(data.orientation);
+            $("#inputprice").val(data.price);
+            $("#inputtext").val(data.text);
             form.render();
         });
     }
+</script>
+<script>
+    layui.use(['form', 'laydate','upload','jquery','layer'], function() {
+        var form = layui.form;
+        var layer = layui.layer;
+        var $ = layui.jquery;
+
+        //监听提交
+        form.on('submit(edit-btn)', function() {
+            var formData =  new FormData($("#editForm")[0]);//获取填写表单数据
+            $.ajax({
+                cache : true,
+                type : "post",
+                dataType:"json",
+                url : "/house/update",
+                async : false,
+                data : formData,  // 你的formid，传参数到后台
+                contentType: false,  //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件
+                processData: false,  //当设置为true的时候,jquery ajax 提交的时候不会序列化 data，而是直接使用da
+                success : function(data){ //data后台return的值
+                    if (data==1) {
+                        layer.msg('修改成功!', {
+                            icon: 1, time: 1000, end: function () {
+                                window.parent.location.reload();//修改成功后刷新父界面
+                            }
+                        });
+
+                    } else {
+                        alert("失败");
+                    }
+                },
+            });
+            return false;
+        });
+
+    });
 </script>
 
 </body>

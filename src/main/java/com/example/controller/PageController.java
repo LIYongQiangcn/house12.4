@@ -26,8 +26,9 @@ public class PageController {
      */
     @RequestMapping("/main")
     public String main(Model m){
-//        User user =  (User)session.getAttribute("loginUser");
-//        session.setAttribute("name",user.getName());
+        User user =  (User)session.getAttribute("loginUser");
+        //给登录后的右上角的基本信息赋值
+        session.setAttribute("name",user.getName());
         return "main";
     }
 
@@ -99,6 +100,18 @@ public class PageController {
     @RequestMapping("/houseadd")
     public String addhouse(){
         return  "houseadd";
+    }
+    @RequestMapping("/houseforme")
+    public String houseForMe(){
+        return "houseforme";
+    }
+
+    /**
+     * 未审核房源信息
+     */
+    @RequestMapping("/houseinfoVerify")
+    public String houseVerify(){
+        return "houseinfoVerify";
     }
 
 

@@ -22,33 +22,64 @@
             <result column="photo" jdbcType="VARCHAR" property="photo" />
         </collection>
     </resultMap>
+    <select id="selectAllHouse"  resultMap="BaseResultMap">
+        select * from houseinfo
+        where status=1
+    </select>
+    <!--模糊查询-->
+    <select id="selectHouseByCity" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from houseinfo
+        where city like "%"#{city}"%" and status=1
+    </select>
+    <select id="selectHouseByTitle" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from houseinfo
+        where title like "%"#{title}"%" and status=1
+    </select>
+    <select id="selectHouseByPrice" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from houseinfo
+        where status=1 and price between 0 and #{price}
+    </select>
+
+    <!--未审核房源-->
+    <select id="selectHouse"  resultMap="BaseResultMap">
+        select * from houseinfo
+        where status=0
+    </select>
+    <update id="updateStatus" parameterType="com.example.entity.HouseInfo">
+        update houseinfo set status=1
+        where hid=#{hid}
+    </update>
+
     <!--关联查询：一个房源，有多张照片-->
     <select id="queryById" resultMap="BaseResultMap">
         select *
         from houseinfo,housephoto
         where hid=phid
     </select>
+    <!--根据用户id查询房源-->
+    <select id="queryHouseByUid" resultMap="BaseResultMap">
+        select *
+        from houseinfo
+        where uid=#{uid}
+    </select>
 
+    <!--添加房源-->
     <insert id="insertHouse" parameterType="com.example.entity.HouseInfo">
         insert into houseinfo(uid,title,province,city,region,village,area,roomnum,floor,orientation,price,text)
         values (#{uid},#{title},#{province},#{city},#{region},#{village},#{area},#{roomnum},#{floor},#{orientation},#{price},#{text})
     </insert>
 
+    <!--房源删除-->
     <delete id="deleteHouseByHid" parameterType="java.lang.Integer">
         delete from houseinfo
         where hid=#{hid}
     </delete>
 
-    <update id="updateHouse" parameterType="com.example.entity.HouseInfo">
+    <!--房源的更新-->
+    <update id="updateHouseByHid" parameterType="com.example.entity.HouseInfo">
         update houseinfo
-        set area=#{area},roomnum=#{roomnum},floor=#{floor},orientation=#{orientation},price=#{price}
+        set uid=#{uid},title=#{title},province=#{province},city=#{city},region=#{region},village=#{village},area=#{area},
+        roomnum=#{roomnum},floor=#{floor},orientation=#{orientation},price=#{price},text=#{text}
         where hid=#{hid}
     </update>
-
-    <select id="selectHouse" resultMap="BaseResultMap">
-        select * from houseinfo
-    </select>
-
-
-
 </mapper>

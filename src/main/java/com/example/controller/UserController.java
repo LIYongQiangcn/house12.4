@@ -39,9 +39,9 @@ public class UserController {
         PageHelper.startPage(page, limit);
         List<User> list = new ArrayList<>();
         //判断，如果是0则是通过名字进行模糊查询
-        if (type.equals("0")) {
+        if (type.equals(0)) {
             list = userService.query(content);
-        }else if(type.equals("1")){
+        }else if(type.equals(1)){
             list = userService.queryBySex(content);
         }else {
             list = userService.queryByPhone(content);
@@ -141,13 +141,11 @@ public class UserController {
      */
     @RequestMapping(value = "/user/login")
     public int userlogin(String phone, String password, String verify, HttpSession session) {
-//        System.out.println(phone);
-//        System.out.println(password);
-//        System.out.println(verify);
         ModelAndView mv = new ModelAndView();
         User user = userService.login(phone, password);
 
         session.setAttribute("loginUser",user);
+        session.setAttribute("userid",user.getUid());
         //校验验证码
         String inputStr = verify;
         String random = (String) session.getAttribute("RANDOMVALIDATECODEKEY");

@@ -10,15 +10,6 @@ public class User {
     private String birthday;
     private String sex;
     private String email;
-//    private String verifyInput;
-//
-//    public String getVerifyInput() {
-//        return verifyInput;
-//    }
-//
-//    public void setVerifyInput(String verifyInput) {
-//        this.verifyInput = verifyInput;
-//    }
 
     public Integer getUid() {
         return uid;

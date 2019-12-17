@@ -6,7 +6,6 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>房屋基本信息列表</title>
     <link rel="stylesheet" href="/layui/css/layui.css">
-    <link rel="stylesheet" type="text/css" href="/css/select.css" />
     <script src="/layui/layui.js"></script>
     <script src="/layui/lay/modules/jquery.js"></script>
     <style>
@@ -27,29 +26,29 @@
 <!--        <li class="layui-this">用户列表</li>-->
 <!--    </ul>-->
 <!--</div>-->
-<div style="width: 100%">
-    <div class="layui-input-inline">
-        <form class="layui-form">
-            <div class="layui-form-item">
-                <label class="layui-form-label">普通搜索</label>
-                <div class="layui-input-inline">
-                    <select name="type" id="type">
-                        <option value="0">城市</option>
-                        <option value="1">标题</option>
-                        <option value="2">价格：<=此价格</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline">
-                    <input type="text" id="content" name="content" lay-verify="" placeholder="请输入搜索的信息"
-                           autocomplete="off" class="layui-input">
-                </div>
-                <button class="layui-btn" id="BtnSearchUserInfo" type="button">
-                    <i class="layui-icon" style="font-size: 18px;color:white;">&#xe615;</i>搜索
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
+<!--<div style="width: 100%">-->
+<!--    <div class="layui-input-inline">-->
+<!--        <form class="layui-form">-->
+<!--            <div class="layui-form-item">-->
+<!--                <label class="layui-form-label">搜索条件</label>-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <select name="type" id="type">-->
+<!--                        <option value="0">用户名</option>-->
+<!--                        <option value="1">性别</option>-->
+<!--                        <option value="2">电话号码</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <input type="text" id="content" name="content" lay-verify="" placeholder="请输入搜索的信息"-->
+<!--                           autocomplete="off" class="layui-input">-->
+<!--                </div>-->
+<!--                <button class="layui-btn" id="BtnSearchUserInfo" type="button"><i class="layui-icon"-->
+<!--                                                                                  style="font-size: 18px;color:white;">&#xe615;</i>搜索-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
 
 <table id="usertable" class="layui-hide" lay-filter="usertable"></table>
 <!--为了显示头像，调整部分css-->
@@ -65,14 +64,10 @@
     }
 </style>
 
-<script type="text/html" id="titlebutton">
-    <button lay-event="delAll" class="layui-btn layui-btn-xs  layui-btn-sm  layui-btn-danger"><i class="layui-icon">&#xe640;</i>批量删除
-    </button>
-</script>
 <!--按钮的设置 onclick="updateButton()" -->
 <script type="text/html" id="barDemo">
     <button type="button" lay-event="edit" class="layui-btn layui-btn-normal layui-btn-xs  layui-btn-sm"><i
-            class="layui-icon">&#xe642;</i>详情
+            class="layui-icon">&#xe642;</i>修改具体信息
     </button>
     <button type="button" lay-event="like" class="layui-btn layui-btn-xs  layui-btn-danger">
         <i class="layui-icon">&#xe640;</i>删除
@@ -92,8 +87,8 @@
         table.render({
             code: '0',
             elem: '#usertable',//demo是table的id名
-            url: '/house/query',//数据接口
-            title: '房源表',
+            url: '/house/queryMyself',//数据接口
+            title: '用户表',
             toolbar: '#titlebutton',
             page: true,
             // limits:[5,8,15],
@@ -106,9 +101,6 @@
                     field: 'hid',
                     title: 'ID',
                 }, {
-                    field: 'title',
-                    title: '标题',
-                },{
                     field: 'city',
                     title: '城市',
                 },{
@@ -120,83 +112,27 @@
                 }, {
                     field: 'roomnum',
                     title: '卧室数量',
-                },{
-                    field: 'status',
-                    title: '状态',
                 },
-                //     {
-                //     field: 'housePhoto',
-                //     title: '照片',
-                // },
+                    {
+                        field: 'status',
+                        title: '状态',
+                    },
+                    //     {
+                    //     field: 'housePhoto',
+                    //     title: '照片',
+                    // },
                     // {
-                //     field: 'floor',
-                //     title: '楼层',
-                // }, {
-                //     field: 'orientation',
-                //     title: '朝向',
-                // }, {
-                //     field: 'price',
-                //     title: '价格',
-                // },
+                    //     field: 'floor',
+                    //     title: '楼层',
+                    // }, {
+                    //     field: 'orientation',
+                    //     title: '朝向',
+                    // }, {
+                    //     field: 'price',
+                    //     title: '价格',
+                    // },
                     {title:'操作',ixed: 'right', width: 272, align: 'center', toolbar: '#barDemo'}]
             ]
-        });
-
-        //模糊查询事件
-        $("#BtnSearchUserInfo").on("click", function () {
-            table.reload('usertable', {
-                where: {
-                    //查询条件，传值到后台
-                    type: $("#type").val(),
-                    //content:模糊查询所输入的值
-                    content: $("#content").val(),
-                }
-            })
-        })
-
-        //头工具栏事件
-        table.on('toolbar(usertable)', function (obj) {
-            var checkStatus = table.checkStatus("usertable")
-                , data = checkStatus.data; //获取选中的数据
-            if (data.length == 0) {
-                parent.layer.msg('请先选择要删除的数据行！', {icon: 2});
-                return;
-            }
-            var uids = "";
-            for (var i = 0; i <= data.length - 1; i++) {
-                if (i < data.length - 1) {
-                    uids += data[i].uid + ",";
-                } else {
-                    uids += data[i].uid
-                }
-
-            }
-            switch (obj.event) {
-                case 'delAll':
-                    layer.confirm('确定删除吗?', function (index) {
-                        $.ajax({
-                            type: 'post',//提交方式
-                            url: '/user/deleteUsers',//访问后台的地址   查询所有的岗位信息
-                            async: false,//  true：异步     false:同步
-                            dataType: "json",//数据类型
-                            data: {uids: uids},
-                            success: function (da) {
-                                if (da == 1) {
-                                    layer.msg('已删除!', {
-                                        icon: 1, time: 1000, end: function () {
-                                            window.location.reload();
-                                        }
-                                    });
-                                } else {
-                                    layer.msg('删除失败');
-                                }
-                            }
-                        });
-
-                    });
-                    break;
-            }
-            ;
         });
 
         //监听按钮工具事件
@@ -240,6 +176,25 @@
                             shade: 0.3,  //设置透明度 ，默认 0.3
                             fixed: false,//不固定弹框 可以随意拖动
                             area: ['800px', '500px'],
+                            content: 'houseinfo-look',//跳转的页面 js获取// 'user-edit.html?id='+data.uid
+                            success: function (layero, index) {
+                                // 获取子页面的iframe
+                                var iframe = window['layui-layer-iframe' + index];
+                                // 向子页面的全局函数child传参
+                                iframe.child(data);
+                            }
+                        })
+                    break;
+                case 'editphoto':
+                    layer.open(
+                        {
+                            type: 2,
+                            title: '编辑',
+                            shadeClose: true,//点击其他地方关闭弹层
+                            maxmin: true,
+                            shade: 0.3,  //设置透明度 ，默认 0.3
+                            fixed: false,//不固定弹框 可以随意拖动
+                            area: ['600px', '450px'],
                             content: 'houseinfo-look',//跳转的页面 js获取// 'user-edit.html?id='+data.uid
                             success: function (layero, index) {
                                 // 获取子页面的iframe

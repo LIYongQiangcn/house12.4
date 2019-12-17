@@ -33,7 +33,7 @@ public class UserService {
     }
 
     /**
-     * 根据性别查询
+     * 根据电话查询
      * @return
      */
     public List<User> queryByPhone(String phone) {
@@ -87,5 +87,12 @@ public class UserService {
     public User login(String phone,String password){
         User user = userMapper.userlogin(phone,password);
         return user;
+    }
+
+    /**
+     * 根据uid查询信息
+     */
+    public User queryByUid(Integer uid){
+        return  userMapper.queryPhoneByUid(uid);
     }
 }
