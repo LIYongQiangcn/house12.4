@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import com.example.entity.Manager;
 import com.example.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,26 +22,14 @@ public class PageController {
         return "index";
     }
     /**
-     * 管理员后台主页面
+     * 后台主页面
      */
     @RequestMapping("/main")
     public String main(Model m){
+        User user =  (User)session.getAttribute("loginUser");
+        //给登录后的右上角的基本信息赋值
+        session.setAttribute("name",user.getName());
         return "main";
-//        //给登录后的右上角的基本信息赋值
-//        session.setAttribute("name",manager.getMpassword());
-//        int flag = 500;
-//        if (flag == 200){
-//            return "main";
-//        }else {
-//            return "login";
-//        }
-
-    }
-    @RequestMapping("/managerdetail")
-    public String manager(Model model){
-        Manager manager =  (Manager) session.getAttribute("loginManager");
-        model.addAttribute("manager",manager);
-        return "managerdetail";
     }
 
 
@@ -53,7 +40,7 @@ public class PageController {
      */
     @RequestMapping("/login")
     public String userlogin(){
-        return "ManagerLogin";
+        return "userlogin";
     }
     @RequestMapping("/loginsuccess")
     public String loginsuccess(){

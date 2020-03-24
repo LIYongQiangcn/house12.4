@@ -19,7 +19,7 @@ public interface UserMapper {
     /**
      * 根据uid查询电话号码
      */
-    User queryEmailByUid(Integer uid);
+    User queryPhoneByUid(Integer uid);
 
     /**
      * 添加用户
@@ -44,6 +44,13 @@ public interface UserMapper {
     int deleteById(Integer uid);
 
     /**
+     * 批量删除
+     * @param uids
+     * @return
+     */
+    int deleteUsers(List<Integer> uids);
+
+    /**
      * 根据id更新信息
      * @param user
      * @return
@@ -56,9 +63,4 @@ public interface UserMapper {
      * @return
      */
     int updateUserPorByUid(User user);
-
-    /**
-     * 判断手机号是否已经被注册
-     */
-    User selectUserByPhone(String phone);
 }

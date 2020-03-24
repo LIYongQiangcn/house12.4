@@ -2,7 +2,6 @@ package com.example.controller;
 
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
-import com.example.common.MailService;
 import com.example.entity.HouseInfo;
 import com.example.entity.HousePhoto;
 import com.example.entity.User;
@@ -43,8 +42,6 @@ public class HouseInfoController {
     HousePhotoService housePhotoService;
     @Autowired
     UserService userService;
-    @Autowired
-    private MailService mailService;
 
     /**
      * 添加房源信息
@@ -114,9 +111,10 @@ public class HouseInfoController {
         List<HouseInfo> list = new ArrayList<>();
         if (type.equals("0")) {
             list = houseInfoService.queryByCity(content);
+            System.out.println("所有房源"+list);
         }else if (type.equals("1")){
             list = houseInfoService.queryByTitle(content);
-        }else {
+        }else{
             list = houseInfoService.queryByPrice(content);
         }
         //对查询后的数据进行包装
@@ -191,21 +189,16 @@ public class HouseInfoController {
             return 0;
         }
     }
-
-
     /**
      * 审核房源:未通过，并发短信通知房主
      */
     @RequestMapping("/house/noVerify")
-    public int houseNotVerify(Integer uid,Integer hid)throws ClientException {
+    public int houseNotVerify(Integer uid)throws ClientException {
         try{
             User user = userService.queryByUid(uid);
-            System.out.println(hid);
-//            houseInfoService.updateStatus();
-            String email = user.getEmail();
+            String pho = user.getPhone();
             //发送短信通知房主房源未通过
-            String message = "你好，你的房源没有通过审核，请查看";
-            mailService.sendSimpleMail(email,"YOUTI租房",message);
+            SendSmsResponse response = sendSms2(pho);
              return 1;
         }catch(Exception e){
             return 0;

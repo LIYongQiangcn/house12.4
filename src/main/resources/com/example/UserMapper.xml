@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.UserMapper">
-
+    <resultMap id="BaseResultMap" type="com.example.entity.User">
+        <id column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="headportrait" jdbcType="VARCHAR" property="headportrait"/>
+        <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+    </resultMap>
     <!--模糊查询-->
-    <select id="queryByName"  parameterType="java.lang.String"  resultType="User">
+    <select id="queryByName"  parameterType="java.lang.String"  resultMap="BaseResultMap">
         select * from user
         where name LIKE "%"#{name}"%"
     </select>
-    <select id="queryBySex"  parameterType="java.lang.String"  resultType="User">
+    <select id="queryBySex"  parameterType="java.lang.String"  resultMap="BaseResultMap">
         select * from user
         where sex LIKE "%"#{sex}"%"
     </select>
-    <select id="queryByPhone"  parameterType="java.lang.String" resultType="User">
+    <select id="queryByPhone"  parameterType="java.lang.String"  resultMap="BaseResultMap">
         select * from user
         where phone LIKE "%"#{phone}"%"
     </select>
 
-    <!--根据uid查询用户邮箱-->
-    <select id="queryEmailByUid" parameterType="java.lang.Integer" resultType="User">
-        select email
+    <!--根据uid查询用户电话号码-->
+    <select id="queryPhoneByUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select phone
         from user
         where uid=#{uid}
-    </select>
-   <!--根据电话号码判断是否已经被注册-->
-    <select id="selectUserByPhone" parameterType="java.lang.String" resultType="User">
-        select *
-        from user
-        where phone=#{phone}
     </select>
 
     <!--注册用户-->
@@ -36,7 +39,7 @@
     </insert>
 
     <!--用户登录-->
-    <select id="userlogin" parameterType="com.example.entity.User" resultType="User">
+    <select id="userlogin" parameterType="com.example.entity.User" resultMap="BaseResultMap">
         select *
         from user
         where phone= #{phone} and password= #{password}
@@ -47,12 +50,12 @@
         delete from user
         where uid=#{uid}
     </delete>
-<!--    <delete id="deleteUsers" parameterType="map">-->
-<!--        delete from user-->
-<!--        where uid in-->
-<!--        <foreach item="uid" collection="list" open="(" close=")" separator=","></foreach>-->
-<!--        #{uid}-->
-<!--    </delete>-->
+    <delete id="deleteUsers" parameterType="map">
+        delete from user
+        where uid in
+        <foreach item="uid" collection="list" open="(" close=")" separator=","></foreach>
+        #{uid}
+    </delete>
 
     <!--更新用户-->
     <update id="updateUserByUid" parameterType="com.example.entity.User">

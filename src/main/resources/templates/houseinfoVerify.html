@@ -160,7 +160,7 @@
                             url: '/house/noVerify',//访问后台的地址   查询所有的岗位信息
                             async: false,//  true：异步     false:同步
                             dataType: "json",//数据类型
-                            data: {uid: data.uid,hid:data.hid},
+                            data: {uid: data.uid},
                             success: function (data) {
                                 if (data == 1) {
                                     layer.msg('已通知!', {

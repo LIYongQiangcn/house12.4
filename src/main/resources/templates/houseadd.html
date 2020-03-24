@@ -11,13 +11,7 @@
 <body>
 <form class="layui-form" action="" id="addForm" style="padding: 10px;">
     <input type="hidden" name="hid" />
-<!--    <input type="hidden" name="uid" th:value="${session.userid}">-->
-    <div class="layui-form-item">
-        <label class="layui-form-label">用户id:</label>
-        <div class="layui-input-inline">
-            <input type="text" name="uid"  placeholder="请输入用户id" autocomplete="off" class="layui-input">
-        </div>
-    </div>
+    <input type="hidden" name="uid" th:value="${session.userid}">
     <div class="layui-form-item">
         <label class="layui-form-label">标题:</label>
         <div class="layui-input-inline">
@@ -208,14 +202,9 @@
                 success : function(data){ //data后台return的值
                     if (data==1) {
                         // layer.msg('hello');
-                        // layer.msg("添加成功");
-                        // location.reload();//修改成功后刷新父界面
-                        layer.msg('添加成功!', {
-                            icon: 1, time: 2000, end: function () {
-                                // window.parent.location.reload();//修改成功后刷新父界面
-                                location.reload();
-                            }
-                        });
+                        alert("成功");
+                        window.parent.location.reload();//修改成功后刷新父界面
+
                     } else {
                         alert("失败");
                     }

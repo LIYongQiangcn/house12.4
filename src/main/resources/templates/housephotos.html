@@ -10,16 +10,18 @@
 <body>
 <form class="layui-form" action="" id="editForm">
     <input type="hidden" name="uid" id="inputuid" />
-<!--    <input type="text" name="uid" class="image" />-->
-    <div class="layui-form-item">
-        <label class="layui-form-label">图片名称:</label>
-        <div class="layui-input-inline" style="width: 450px">
-            <input type="text" class="layui-input image"  autocomplete="off" >
-        </div>
-    </div>
+    <!--        <div class="layui-form-item">-->
+    <!--            <label class="layui-form-label">图片地址</label>-->
+    <!--            <div class="layui-input-inline">-->
+    <!--                <input type="text" name="headportrait" autocomplete="off" class="layui-input image">-->
+    <!--            </div>-->
+    <!--        </div>-->
     <div class="layui-form-item">
         <label class="layui-form-label ">照片:</label>
         <div class="layui-input-block">
+<!--            <div class="layui-upload-list">-->
+<!--                <img class="layui-upload-img" id="demo1"  style="width:100px;height:100px;">-->
+<!--            </div>-->
                 <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
                     预览图：
                     <div class="layui-upload-list" id="demo1"></div>
@@ -72,7 +74,6 @@
             ,url: '/upload/'
             ,accept:'images'
             // ,auto:false
-            ,multiple:true
             ,size:50000
             ,number:0
             ,before: function(obj){
@@ -92,7 +93,7 @@
                 demoText.html('<span style="color: #4cae4c;">上传成功</span>');
 
                 var fileupload = $(".image");
-                fileupload.attr("value",res.data);
+                fileupload.attr("value",res.data.src);
                 console.log(fileupload.attr("value"));
             }
             ,error: function(){
@@ -113,7 +114,7 @@
                 cache : true,
                 type : "post",
                 dataType:"json",
-                url : "",
+                url : "/user/headportraitupdate",
                 async : false,
                 data : formData,  // 你的formid，传参数到后台
                 contentType: false,  //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件
