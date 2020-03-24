@@ -58,14 +58,6 @@ public class UserService {
     }
 
     /**
-     * 用户批量删除
-     */
-    public int deleteNum(List<Integer> uids){
-          return userMapper.deleteUsers(uids);
-
-    }
-
-    /**
      * 用户信息修改
      */
     public int update(User user){
@@ -91,6 +83,13 @@ public class UserService {
      * 根据uid查询信息
      */
     public User queryByUid(Integer uid){
-        return  userMapper.queryPhoneByUid(uid);
+        return  userMapper.queryEmailByUid(uid);
+    }
+
+    /**
+     *判断手机号是否已经被注册
+     */
+    public User queryPhone(String phone){
+        return userMapper.selectUserByPhone(phone);
     }
 }

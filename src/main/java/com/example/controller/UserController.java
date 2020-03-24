@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
+import com.example.common.MailService;
 import com.example.entity.User;
 import com.example.service.UserService;
 import com.github.pagehelper.PageHelper;
@@ -24,6 +25,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
     /**
      * 用户查询：模糊查询+分页操作
      * @return
@@ -32,21 +34,21 @@ public class UserController {
     public Map<String, Object> query(@RequestParam(required = false, defaultValue = "") String content,
                                      @RequestParam(required = false, defaultValue = "0") String type,
                                      @RequestParam Integer page, @RequestParam Integer limit) {
+//        System.out.println(page+":"+limit);
+        System.out.println(content);
         //在查询之前pagehelper调用
         PageHelper.startPage(page, limit);
         List<User> list = new ArrayList<>();
         //判断，如果是0则是通过名字进行模糊查询
-        if (type.equals(0)) {
+        if (type.equals("0")) {
             list = userService.query(content);
-        }else if(type.equals(1)){
+        }else if(type.equals("1")){
             list = userService.queryBySex(content);
         }else {
             list = userService.queryByPhone(content);
         }
         //对查询后的数据进行包装
         PageInfo pageInfo = new PageInfo(list);
-
-
         //数据赋值
         Map<String, Object> map = new HashMap<>();
         map.put("code", 0);
@@ -58,6 +60,25 @@ public class UserController {
     }
 
     /**
+     * 判断电话号码是否已被注册
+     * @param phone
+     * @return
+     */
+    @RequestMapping("/user/check")
+    public int check(String phone){
+        try{
+            if (userService.queryPhone(phone)!= null){
+                return 1;
+            }else {
+                return 0;
+            }
+        }
+        catch (Exception e){
+            return 0;
+        }
+    }
+
+    /**
      * 用户注册
      *
      * @param user
@@ -65,9 +86,15 @@ public class UserController {
      */
     @RequestMapping("/user/register")
     public int addUser(User user) {
+        int l = user.getPassword().length();
         try {
-            userService.addUser(user);
-            return 1;
+            //如果手机号已被注册，或者密码长度小于4位则不能注册
+            if(userService.queryPhone(user.getPhone())!=null && l<=4){
+                return 0;
+            }else {
+                userService.addUser(user);
+                return 1;
+            }
         } catch (Exception e) {
             return 0;
         }
@@ -92,10 +119,12 @@ public class UserController {
     @RequestMapping(value = "/user/deleteUsers")
     public int deleteUsers(String[] uids) {
         int[] ids = new int[uids.length];
+        //循环获取用户ids
         for(int i=0;i<uids.length;i++){
             ids[i] = Integer.parseInt(uids[i]);
         }
         try{
+            //循环遍历一个一个的删除
             for(int j=0;j<uids.length;j++)
             {
                 userService.delete(ids[j]);
@@ -125,6 +154,7 @@ public class UserController {
     @RequestMapping("/user/headportraitupdate")
     public int updatePhoto(User user) {
         try {
+            System.out.println("头像是："+user.getHeadportrait());
             userService.updateHead(user);
             return 1;
         } catch (Exception e) {

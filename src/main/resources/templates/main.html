@@ -18,13 +18,13 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <!--           th:text="${session.name}"     -->
-                    <p class="layui-side-user-name" >基本资料</p>
+                    <p class="layui-side-user-name detail " >修改密码</p>
                 </a>
-                <dl class="layui-nav-child">
-                    <!--                    <button onclick="add()">1111</button>-->
-                    <dd><a class="open-popup detail">基本资料</a></dd>
-                    <!--                    <dd><a href="">安全设置</a></dd>-->
-                </dl>
+<!--                <dl class="layui-nav-child">-->
+<!--                    &lt;!&ndash;                    <button onclick="add()">1111</button>&ndash;&gt;-->
+<!--                    <dd><a class="open-popup detail">基本资料</a></dd>-->
+<!--                    &lt;!&ndash;                    <dd><a href="">安全设置</a></dd>&ndash;&gt;-->
+<!--                </dl>-->
             </li>
             <li class="layui-nav-item"><a href="login">退出</a></li>
         </ul>
@@ -37,9 +37,9 @@
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
                     <!-- 2级菜单的循环-->
-                    <a href="javascript:;" lay-tips="主页" lay-direction="2">
+                    <a href="main" lay-tips="导航栏" lay-direction="2">
                         <i class="layui-icon layui-icon-home"></i>
-                        <cite>主页</cite>
+                        <cite>导航栏</cite>
                     </a>
                 </li>
                 <li class="layui-nav-item">
@@ -79,7 +79,7 @@
     <div class="layui-body">
         <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowclose="true">
             <ul class="layui-tab-title"></ul>
-            <div class="layui-tab-content" style="padding: 0px"></div>
+            <div class="layui-tab-content" style="padding: 10px"></div>
         </div>
     </div>
     <div class="layui-footer">
@@ -99,11 +99,11 @@
             layer.open(
                 {
                     type: 2, //type 2表示iframe弹窗类型；layer type一般为5种类型
-                    area: ['700px', '500px'],
+                    area: ['350px', '240px'],
                     fixed: false, //不固定
                     maxmin: true,
                     title: "会员详情",
-                    content: 'userdetail' //iframe展示当前页面
+                    content: 'managerdetail' //iframe展示当前页面,名字是requestMappering里的值
                 })
         })
         // $('.detail').on('click',function () {
@@ -143,7 +143,7 @@
                 element.tabAdd('demo', {
                     title: name,
                     content: '<iframe data-frameid="' + id + '" scrolling="auto" frameborder="0" src="' + url +
-                        '" style="width:100%;height:100%;background-image: url("/uploads/allimg/171102/1-1G1021242230-L.jpg")" ></iframe>',
+                        '", style="width:100%;height:300px;"></iframe>',
                     id: id //规定好的id
                 })
                 FrameWH(); //计算ifram层的大小
@@ -159,7 +159,7 @@
 
         function FrameWH() {
             var h = $(window).height();
-            $("iframe").css("height", h + "px");
+            $("iframe").css("height", h+ "px");
         }
     });
 </script>

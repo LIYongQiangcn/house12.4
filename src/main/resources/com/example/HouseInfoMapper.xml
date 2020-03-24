@@ -24,29 +24,35 @@
     </resultMap>
     <select id="selectAllHouse"  resultMap="BaseResultMap">
         select * from houseinfo
-        where status=1
+        where status = 0
     </select>
     <!--模糊查询-->
     <select id="selectHouseByCity" parameterType="java.lang.String" resultMap="BaseResultMap">
         select * from houseinfo
-        where city like "%"#{city}"%" and status=1
+        where city like "%"#{city}"%" and status=0
     </select>
     <select id="selectHouseByTitle" parameterType="java.lang.String" resultMap="BaseResultMap">
         select * from houseinfo
-        where title like "%"#{title}"%" and status=1
+        where title like "%"#{title}"%" and status=0
     </select>
     <select id="selectHouseByPrice" parameterType="java.lang.String" resultMap="BaseResultMap">
         select * from houseinfo
-        where status=1 and price between 0 and #{price}
+        where status=0 and price between 0 and #{price}
     </select>
 
-    <!--未审核房源-->
+    <!--未审核的房源-->
     <select id="selectHouse"  resultMap="BaseResultMap">
         select * from houseinfo
-        where status=0
+        where status=1
     </select>
+    <!--通过审核-->
     <update id="updateStatus" parameterType="com.example.entity.HouseInfo">
-        update houseinfo set status=1
+        update houseinfo set status=0
+        where hid=#{hid}
+    </update>
+    <!--未审核房源-->
+    <update id="updateStatus2">
+         update houseinfo set status=status+1
         where hid=#{hid}
     </update>
 

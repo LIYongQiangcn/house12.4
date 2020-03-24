@@ -12,7 +12,6 @@
         body {
             margin: 10px;
         }
-
         .demo-carousel {
             height: 200px;
             line-height: 250px;
@@ -20,12 +19,7 @@
         }
     </style>
 </head>
-<body>
-<!--<div class="layui-tab layui-tab-brief">-->
-<!--    <ul class="layui-tab-title">-->
-<!--        <li class="layui-this">用户列表</li>-->
-<!--    </ul>-->
-<!--</div>-->
+<body style="height: 300px">
 <div style="width: 100%">
     <div class="layui-input-inline">
         <form class="layui-form">
@@ -55,7 +49,6 @@
 <style type="text/css">
     .layui-table-cell {
         text-align: center;
-        height: auto;
         white-space: normal;
     }
 
@@ -98,7 +91,8 @@
             title: '用户表',
             toolbar: '#titlebutton',
             page: true,
-            // limits:[5,8,15],
+            limit:5,
+            limits:[5,8,10,15],
             cols: [
                 [ //表头
                     {
@@ -148,7 +142,7 @@
             })
         })
 
-        //头工具栏事件
+        //头工具栏事件，批量删除
         table.on('toolbar(usertable)', function (obj) {
             var checkStatus = table.checkStatus("usertable")
                 , data = checkStatus.data; //获取选中的数据
@@ -165,7 +159,7 @@
                 }
 
             }
-            alert(uids);
+            // alert(uids);
             switch (obj.event) {
                 case 'delAll':
                     layer.confirm('确定删除吗?', function (index) {
@@ -179,7 +173,8 @@
                                 if (da == 1) {
                                     layer.msg('已删除!', {
                                         icon: 1, time: 1000, end: function () {
-                                            window.location.reload();
+                                            obj.del();
+                                            // window.location.reload();
                                         }
                                     });
                                 } else {
