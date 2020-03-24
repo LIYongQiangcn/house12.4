@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>会员登录</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/layui/css/index.css">
+</head>
+<body background="\layui\css\plugin\1.jpg">
+<div id="container">
+    <div class="admin-login-background">
+        <!--    action="/loginUser":控制层的方法 th:action="@{/user/login}" method="post"
+           method="post"  请求方法post，前台登陆就不会显示用户名和密码   -->
+        <form class="layui-form" id="loginform">
+            <div class="layui-form-item">
+                <i class="layui-icon layui-icon-username admin-icon admin-icon-username"></i>
+                <input type="text" name="munber" id="phone"
+                       placeholder="请输入你的电话号码"
+                       autocomplete="off"
+                       class="layui-input admin-input admin-input-username">
+            </div>
+            <div class="layui-form-item">
+                <i class="layui-icon layui-icon-password admin-icon admin-icon-password"></i>
+                <input type="password" name="mpassword" id="password"
+                       placeholder="请输入密码"
+                       autocomplete="off"
+                       class="layui-input admin-input">
+            </div>
+            <div>
+                <button type="button" class="layui-btn admin-button" id="fomedemo">登陆</button>
+            </div>
+            <!--            <div>-->
+            <!--                <input type="button" class="layui-btn admin-button register" value="注册">-->
+            <!--            </div>-->
+        </form>
+    </div>
+</div>
+
+<script src="/layui/jquery-3.2.1.min.js"></script>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui/layui.js"></script>
+<script src="/layui/lay/modules/jquery.js"></script>
+
+<script>
+    layui.use(['layer','form','jquery'],function () {
+        var layer = layui.layer;
+        var form = layui.form;
+        var $ = layui.jquery;
+
+        $("#fomedemo").click(function () {
+            var data = $("#loginform").serializeArray();
+            $.ajax({
+                type:'POST',
+                url:'/manager/login',
+                async:false,
+                data:data,
+                success:function (data) {
+                    if(data==1){
+                        location.href="main";
+                    }else{
+                        // layer.msg('用户名或密码错误');
+                        // location.href = "login";
+                        layer.msg('用户名或密码错误!', {
+                            icon: 1, time: 2000, end: function () {
+                                // location.href = "login";
+                            }
+                        });
+                    }
+                }
+            })
+        });
+
+    })
+</script>
+
+</body>
+</html>
+
