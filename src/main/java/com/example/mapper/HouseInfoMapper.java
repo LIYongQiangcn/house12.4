@@ -23,6 +23,7 @@ public interface HouseInfoMapper {
     List<HouseInfo> selectHouseByCity(String city);
     List<HouseInfo> selectHouseByTitle(String title);
     List<HouseInfo> selectHouseByPrice(String price);
+
     List<HouseInfo> queryHouseByUid(Integer uid);
     List<HouseInfo> queryById();
 

@@ -16,6 +16,7 @@
 <!--                <input type="text" name="headportrait" autocomplete="off" class="layui-input image">-->
 <!--            </div>-->
 <!--        </div>-->
+    <input type="hidden" name="headportrait" class="image">
         <div class="layui-form-item">
             <label class="layui-form-label ">照片:</label>
             <div class="layui-input-block">
@@ -50,7 +51,7 @@
             console.log(data);
             //给编辑表单赋值
             $("#inputuid").val(data.uid);
-            $("#inputphone").val(data.phone);
+            $("#inputheadportrait").val(data.headportrait);
 
             $(document).ready(function(){
                 $('#demo1').attr('src','/ioReadImage/'+data.headportrait);
@@ -116,7 +117,7 @@
                 dataType:"json",
                 url : "/user/headportraitupdate",
                 async : false,
-                data : formData,  // 你的formid，传参数到后台
+                data : formData,  // 传参数到后台
                 contentType: false,  //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件
                 processData: false,  //当设置为true的时候,jquery ajax 提交的时候不会序列化 data，而是直接使用da
                 success : function(data){ //data后台return的值

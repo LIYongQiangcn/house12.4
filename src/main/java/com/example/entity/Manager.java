@@ -6,9 +6,9 @@ package com.example.entity;
  * @Description
  * @date 2019/12/5
  */
-public class SystemManager {
+public class Manager {
     Integer mid;
-    Integer munber;
+    String munber;
     String mpassword;
 
     public Integer getMid() {
@@ -19,11 +19,11 @@ public class SystemManager {
         this.mid = mid;
     }
 
-    public Integer getMunber() {
+    public String getMunber() {
         return munber;
     }
 
-    public void setMunber(Integer munber) {
+    public void setMunber(String munber) {
         this.munber = munber;
     }
 
