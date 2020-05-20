@@ -24,27 +24,31 @@ public class ManagerController {
 
     /**
      * 管理员登录
-     * , method = RequestMethod.POST,headers = "Accept=application/json"
+     * method = RequestMethod.POST,headers = "Accept=application/json"
      */
     @RequestMapping(value = "/manager/login")
-    public int userlogin(String munber, String mpassword, HttpSession session) {
+    public int userLogin(String number, String mpassword, HttpSession session) {
         ModelAndView mv = new ModelAndView();
-        Manager manager = managerService.login(munber, mpassword);
+        Manager manager = managerService.login(number, mpassword);
 
-        if (manager != null){
+        if (manager != null ){
             session.setAttribute("loginManager",manager);
             session.setAttribute("Managerid",manager.getMid());
             session.setAttribute("message",200);
             return 1;
-        }else {
-            session.setAttribute("message",500); //设置一个状态码，在main页面判断
+        }else if (manager == null) {
+            //用户名或密码错误
+            return 3;
+        } else {
+            session.setAttribute("message",500);
             return 0;
         }
-
     }
 
     /**
      * 修改密码
+     * @param manager
+     * @return
      */
     @RequestMapping(value = "/manager/updatePassword")
     public int update(Manager manager){

@@ -15,11 +15,11 @@ public interface ManagerMapper {
 
     /**
      * 会员登录
-     * @param munber
+     * @param number
      * @param mpassword
      * @return
      */
-    Manager managerlogin(String munber, String mpassword);
+    Manager managerlogin(String number, String mpassword);
 
     /**
      * 修改密码

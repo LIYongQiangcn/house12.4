@@ -9,9 +9,9 @@
     <script src="/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
     <script src="/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
 </head>
-<body style="width: 100%;height: 100%;" background="\layui\css\plugin\1.jpg" >
-<div style="margin-top: 10pxbb">
-    <div class="layui-main" style="width: 100%;">
+<body style="width: 100%;height: 100%;" background="\layui\css\plugin\small.jpg" >
+<div style="margin-top: 200px;">
+    <div class="layui-main" style="width: 100%;margin-left: 450px">
 <!--        <h1 style="text-align: center;color: #00FF00">请输入注册信息</h1>-->
         <form class="layui-form" id="addForm" style="align-content: center">
             <div class="layui-form-item">
@@ -35,38 +35,38 @@
 <!--                           lay-verify="required"/>-->
 <!--                </div>-->
 <!--            </div>-->
-            <input type="hidden" name="headportrait" class="image">
-            <div class="layui-form-item">
-                <label class="layui-form-label ">头像：</label>
-                <div class="layui-input-inline">
-                    <button type="button" class="layui-btn" id="test1">上传图片</button>
-                    <p id="demoText"></p>
-                    <div class="layui-upload-list">
-                        <img class="layui-upload-img" id="demo1" style="width:100px;height:100px;">
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">生日：</label>
-                <div class="layui-input-inline">
-                    <input id="birthday" type="text" name="birthday" placeholder="请选择日期" class="layui-input"
-                           lay-verify="required"/>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">性别：</label>
-                <div class="layui-input-inline">
-                    <input id="sex" type="text" name="sex" placeholder="请输入性别" class="layui-input"
-                           lay-verify="required"/>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">QQ邮箱：</label>
-                <div class="layui-input-inline">
-                    <input id="email" type="text" name="email" placeholder="请输入邮箱" class="layui-input"
-                           lay-verify="required"/>
-                </div>
-            </div>
+<!--            <input type="hidden" name="headportrait" class="image">-->
+<!--            <div class="layui-form-item">-->
+<!--                <label class="layui-form-label ">头像：</label>-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <button type="button" class="layui-btn" id="test1">上传图片</button>-->
+<!--                    <p id="demoText"></p>-->
+<!--                    <div class="layui-upload-list">-->
+<!--                        <img class="layui-upload-img" id="demo1" style="width:100px;height:100px;">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="layui-form-item">-->
+<!--                <label class="layui-form-label">生日：</label>-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <input id="birthday" type="text" name="birthday" placeholder="请选择日期" class="layui-input"-->
+<!--                           lay-verify="required"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="layui-form-item">-->
+<!--                <label class="layui-form-label">性别：</label>-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <input id="sex" type="text" name="sex" placeholder="请输入性别" class="layui-input"-->
+<!--                           lay-verify="required"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="layui-form-item">-->
+<!--                <label class="layui-form-label">QQ邮箱：</label>-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <input id="email" type="text" name="email" placeholder="请输入邮箱" class="layui-input"-->
+<!--                           lay-verify="required"/>-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="layui-form-item">
                 <label class="layui-form-label">手机号：</label>
                 <div class="layui-input-inline">
@@ -87,6 +87,11 @@
                 <div class="layui-input-inline" style="margin: 0px 0px 0px 100px">
                     <button class="layui-btn" lay-submit lay-filter="register">确认</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="margin: 0px 0px 0px 100px">
+                    <button class="layui-btn" id="BtnSearchUserInfo" >已经注册，直接登录</button>
                 </div>
             </div>
         </form>
@@ -189,7 +194,7 @@
                         if (data==1) {
                             layer.alert("恭喜你成为会员,点击确认回到登录页面", function () {
                                 // window.location.href = "login.html";
-                                location.href="login";//注册成功后刷新父界面
+                                location.href="userlogin";//注册成功后刷新父界面
                             });
                         }
                         else {

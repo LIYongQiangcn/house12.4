@@ -10,18 +10,28 @@
 
 <body>
 <form class="layui-form" action="" id="addForm" style="padding: 10px;">
-    <input type="hidden" name="hid" />
+    <input type="hidden" name="id" />
 <!--    <input type="hidden" name="uid" th:value="${session.userid}">-->
     <div class="layui-form-item">
-        <label class="layui-form-label">用户id:</label>
+        <label class="layui-form-label">用户手机号:</label>
         <div class="layui-input-inline">
-            <input type="text" name="uid"  placeholder="请输入用户id" autocomplete="off" class="layui-input">
+            <input type="text" name="phone"  placeholder="请输入用户手机号" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">标题:</label>
         <div class="layui-input-inline">
             <input type="text" name="title"  placeholder="请输入房源出售标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <input type="hidden" name="picture" class="image">
+    <div class="layui-form-item">
+        <label class="layui-form-label ">照片:</label>
+        <div class="layui-input-block">
+            <div class="layui-upload-list">
+                <img class="layui-upload-img" id="demo1"  style="width:100px;height:100px;">
+            </div>
+            <button type="button" class="layui-btn" id="test2">上传图片</button>
         </div>
     </div>
     <div class="layui-form-item" id="addressDiv">
@@ -186,6 +196,43 @@
         var laydate = layui.laydate;
         var upload = layui.upload;
         var layer = layui.layer;
+
+        var uploadInst = upload.render({
+            elem: '#test2'
+            ,url: '/upload/'
+            ,accept:'images'
+            // ,auto:false
+            ,size:50000
+            ,number:0
+            ,before: function(obj){
+                //文件上传前的回调
+                obj.preview(function(index, file, result){
+                    // $('#demo1').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">') 多图片上传
+                    $('#demo1').attr('src', result);
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #4cae4c;">上传成功</span>');
+
+                var fileupload = $(".image");
+                fileupload.attr("value",res.data.src);
+                console.log(fileupload.attr("value"));
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
 
         //laydate
         laydate.render({

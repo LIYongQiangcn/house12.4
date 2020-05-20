@@ -9,21 +9,21 @@
 
 <body>
 <form class="layui-form" action="" id="editForm">
-    <input type="hidden" name="uid" id="inputuid" />
-    <input type="hidden" name="headportrait" class="image">
-        <div class="layui-form-item">
-            <label class="layui-form-label ">照片:</label>
-            <div class="layui-input-block">
-                <div class="layui-upload-list">
-                    <img class="layui-upload-img" id="demo1"  style="width:100px;height:100px;">
-                </div>
-<!--                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">-->
-<!--                    预览图：多图片上传-->
-<!--                    <div class="layui-upload-list" id="demo1"></div>-->
-<!--                </blockquote>-->
-                <button type="button" class="layui-btn" id="test1">上传图片</button>
+    <input type="hidden" th:value="${user.uid}" id="inputuid" />
+    <input type="hidden" name="headportrait" class="image" id="inputPicture">
+    <div class="layui-form-item">
+        <label class="layui-form-label ">照片:</label>
+        <div class="layui-input-block">
+            <div class="layui-upload-list">
+                <img class="layui-upload-img" id="demo1"  style="width:100px;height:100px;">
             </div>
+            <!--                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">-->
+            <!--                    预览图：多图片上传-->
+            <!--                    <div class="layui-upload-list" id="demo1"></div>-->
+            <!--                </blockquote>-->
+            <button type="button" class="layui-btn" id="test1">上传图片</button>
         </div>
+    </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit="" lay-filter="edit-btn">立即提交</button>
@@ -37,25 +37,6 @@
 <!--    <img src="/ioReadImage/{{data.headportrait}}" style="width:50px;height:50px;"/>-->
 <!--</script>-->
 <script th:inline="none">
-    function child(data) {
-        layui.use(['form','jquery'],function () {
-            var form = layui.form;
-            var $ = layui.jquery;
-
-            console.log(data);
-            //给编辑表单赋值
-            $("#inputuid").val(data.uid);
-            $("#inputheadportrait").val(data.headportrait);
-
-            $(document).ready(function(){
-                $('#demo1').attr('src','/ioReadImage/'+data.headportrait);
-            })
-            form.render();
-        });
-
-
-    }
-
     layui.use(['form', 'laydate','upload','jquery','layer'], function() {
         var form = layui.form;
         var laydate = layui.laydate;
@@ -103,7 +84,11 @@
 
         //监听提交
         form.on('submit(edit-btn)', function() {
-            var formData =  new FormData($("#editForm")[0]);//获取填写表单数据
+            var headportrait= $('#inputPicture').val();
+            var uid = $('#inputuid').val();
+            var formData = new FormData;
+            formData.set("uid",uid);
+            formData.set("headportrait",headportrait);
             $.ajax({
                 cache : true,
                 type : "post",

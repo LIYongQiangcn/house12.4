@@ -3,7 +3,7 @@
 <mapper namespace="com.example.mapper.ManagerMapper">
     <resultMap id="BaseResultMap" type="com.example.entity.Manager">
         <id column="mid" jdbcType="INTEGER" property="mid"/>
-        <result column="munber" jdbcType="VARCHAR" property="mumber"/>
+        <result column="number" jdbcType="VARCHAR" property="number"/>
         <result column="mpassword" jdbcType="VARCHAR" property="mpassword"/>
 
     </resultMap>
@@ -11,7 +11,7 @@
     <select id="managerlogin" parameterType="com.example.entity.Manager" resultType="Manager">
         select *
         from manager
-        where munber= #{munber} and mpassword= #{mpassword}
+        where number= #{number} and mpassword= #{mpassword}
     </select>
 
     <update id="updatePassword"  parameterType="com.example.entity.Manager">

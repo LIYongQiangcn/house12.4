@@ -13,6 +13,12 @@ import java.util.List;
  */
 @Mapper
 public interface HouseInfoMapper {
+
+    /**
+     * 添加房源信息
+     * @param houseInfo
+     * @return
+     */
     int insertHouse(HouseInfo houseInfo);
 
     /**
@@ -24,26 +30,45 @@ public interface HouseInfoMapper {
     List<HouseInfo> selectHouseByTitle(String title);
     List<HouseInfo> selectHouseByPrice(String price);
 
-    List<HouseInfo> queryHouseByUid(Integer uid);
-    List<HouseInfo> queryById();
 
     /**
      * 未审核房源的查询
      */
     List<HouseInfo> selectHouse();
+
     /**
      * 房源审核
      */
-    int updateStatus(Integer hid);
+    int updateStatusTrue(Integer id);
 
     /**
      * 房源的删除
      */
-    int deleteHouseByHid(Integer hid);
+    int deleteHouseById(Integer id);
     /**
      * 房源的更新
      */
     int updateHouseByHid(HouseInfo houseInfo);
 
     List<HouseInfo> selectAllHouse();
+
+    /**
+     * 查询所有给前端展示
+     * @return
+     */
+    List<HouseInfo> selectHouseToWeb();
+
+    /**
+     * 查询自己的房源信息
+     * @param phone
+     * @return
+     */
+    List<HouseInfo> selectMyself(String phone);
+
+    /**
+     * 根据id查询房源
+     * @param id
+     * @return
+     */
+    HouseInfo selectHouseByHid(Integer id);
 }

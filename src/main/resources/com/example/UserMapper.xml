@@ -31,9 +31,16 @@
 
     <!--注册用户-->
     <insert id="insertUser" parameterType="com.example.entity.User">
-        insert into user(name,phone,password,headportrait,birthday,sex,email)
-        values (#{name},#{phone},#{password},#{headportrait},#{birthday},#{sex},#{email})
+        insert into user(name,phone,password)
+        values (#{name},#{phone},#{password})
     </insert>
+    <!-- 完善用户信息 -->
+    <update id="updateUserAtWeb" parameterType="com.example.entity.User">
+        update user
+        set name=#{name},phone=#{phone},password=#{password},
+        birthday=#{birthday},sex=#{sex},email=#{email}
+        where uid=#{uid}
+    </update>
 
     <!--用户登录-->
     <select id="userlogin" parameterType="com.example.entity.User" resultType="User">
@@ -47,14 +54,8 @@
         delete from user
         where uid=#{uid}
     </delete>
-<!--    <delete id="deleteUsers" parameterType="map">-->
-<!--        delete from user-->
-<!--        where uid in-->
-<!--        <foreach item="uid" collection="list" open="(" close=")" separator=","></foreach>-->
-<!--        #{uid}-->
-<!--    </delete>-->
 
-    <!--更新用户-->
+    <!--后台管理：更新用户-->
     <update id="updateUserByUid" parameterType="com.example.entity.User">
         update user
         set name=#{name},phone=#{phone},password=#{password},
@@ -67,5 +68,14 @@
         set headportrait=#{headportrait}
         where uid=#{uid}
     </update>
+    <update id="updatePassword"  parameterType="com.example.entity.User" >
+        update user
+        set password=#{password}
+        where uid=#{uid}
+    </update>
+    <select id="selectUserById" parameterType="java.lang.Integer"  resultType="User">
+        select * from user
+        where uid=#{uid}
+    </select>
 
 </mapper>

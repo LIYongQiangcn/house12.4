@@ -2,44 +2,44 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>会员登录</title>
+    <title>管理员登录</title>
     <link rel="stylesheet" href="/layui/css/layui.css">
     <link rel="stylesheet" href="/layui/css/index.css">
 </head>
-<body background="\layui\css\plugin\small.jpg">
+<body background="\layui\css\plugin\1.jpg">
 <div id="container">
     <div class="admin-login-background">
-        <h1 style="margin-left: 90px;margin-bottom: 20px">会员登录</h1>
         <!--    action="/loginUser":控制层的方法 th:action="@{/user/login}" method="post"
            method="post"  请求方法post，前台登陆就不会显示用户名和密码   -->
+        <h1 style="margin-left: 90px;margin-bottom: 20px">管理员登录</h1>
         <form class="layui-form" id="loginform">
             <div class="layui-form-item">
                 <i class="layui-icon layui-icon-username admin-icon admin-icon-username"></i>
-                <input type="Integer" name="phone" id="phone"
-                       placeholder="请输入你的电话号码"
+                <input type="Integer" name="number" id="phone"
+                       placeholder="请输入你的编号"
                        autocomplete="off"
                        class="layui-input admin-input admin-input-username">
             </div>
             <div class="layui-form-item">
                 <i class="layui-icon layui-icon-password admin-icon admin-icon-password"></i>
-                <input type="password" name="password" id="password"
+                <input type="password" name="mpassword" id="password"
                        placeholder="请输入密码"
                        autocomplete="off"
                        class="layui-input admin-input">
             </div>
-            <div class="layui-form-item">
-                <a href="javascript:void(0);" title="点击更换验证码">
-                    <img id="imgVerify" src="getVerify" alt="更换验证码" width="100%" height="50px" onclick="getVerify(this)">
-                    <p style="color:#FF0000;">点击图片更换验证码</p>
-                </a>
-            </div>
-            <div class="layui-form-item">
-                <input  type="text" id="verify" name="verify"
-                        placeholder="请输入验证码"
-                        autocomplete="off"
-                        maxlength="4"
-                        class="layui-input admin-input">
-            </div>
+<!--            <div class="layui-form-item">-->
+<!--                <a href="javascript:void(0);" title="点击更换验证码">-->
+<!--                    <img id="imgVerify" src="getVerify" alt="更换验证码" width="100%" height="50px" onclick="getVerify(this)">-->
+<!--                    <p style="color:#FF0000;">点击图片更换验证码</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="layui-form-item">-->
+<!--                <input  type="text" id="verify" name="verify"-->
+<!--                        placeholder="请输入验证码"-->
+<!--                        autocomplete="off"-->
+<!--                        maxlength="4"-->
+<!--                        class="layui-input admin-input">-->
+<!--            </div>-->
             <div>
                 <button type="button" class="layui-btn admin-button" id="fomedemo">登陆</button>
             </div>
@@ -66,7 +66,6 @@
         $("#fomedemo").click(function () {
             var number = $("#phone").val();
             var mpassword = $("#password").val();
-            var verify = $("#verify").val();
             if (number == null || number == "") {
                 layer.msg("请输入编号！！！");
                 return;
@@ -75,25 +74,30 @@
                 layer.msg("请输入密码！！！");
                 return;
             }
-            if (verify == null || verify == "") {
-                layer.msg("请输入验证码！！！");
-                return;
-            }
             var data = $("#loginform").serializeArray();
             $.ajax({
                 type:'POST',
-                url:'user/login',
+                url:'manager/login',
                 async:false,
                 data:data,
                 success:function (data) {
                     if(data==1){
-                        location.href="index";
+                        location.href="main";
                     }else if(data==2){
-                        layer.msg('验证码输入错误');
+                        layer.msg('验证码输入错误', {
+                            icon: 1, time: 1000, end: function () {
+                                window.location.reload();
+                            }
+                        });
                     }else if(data==3){
-                        layer.msg('用户名或密码错误');
+                        layer.msg('用户名或密码错误', {
+                            icon: 1, time: 1000, end: function () {
+                                window.location.reload();
+                            }
+                        });
+                        // layer.msg('用户名或密码错误');
                     }else {
-                        location.href = "userlogin";
+                        location.href="managerLogin";
                     }
                 }
             })

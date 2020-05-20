@@ -9,22 +9,37 @@ import java.util.Set;
  * @date 2019/12/5
  */
 public class HouseInfo {
-    private Integer hid;
-    private Integer uid;
+    private Integer id;
+    private String phone;
     private String title;
+    private Integer price;
+    private String picture;
     private String province;
     private String city;
     private String region;
     private String village;
-    private String area;
+    private Integer area;
     private String roomnum;
     private String floor;
     private String orientation;
-    private Integer price;
-    private Integer status;
-    private Integer likecount;
     private String text;
-    private Set<HousePhoto> housePhotos;
+    private Integer status;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getTitle() {
         return title;
@@ -34,30 +49,44 @@ public class HouseInfo {
         this.title = title;
     }
 
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public Integer getArea() {
+        return area;
+    }
+
+    public void setArea(Integer area) {
+        this.area = area;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public String getProvince() {
         return province;
     }
 
     public void setProvince(String province) {
         this.province = province;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-
-
-    public Set<HousePhoto> getHousePhotos() {
-        return housePhotos;
-    }
-
-    public void setHousePhotos(Set<HousePhoto> housePhotos) {
-        this.housePhotos = housePhotos;
     }
 
     public String getCity() {
@@ -84,38 +113,6 @@ public class HouseInfo {
         this.village = village;
     }
 
-    public Integer getLikecount() {
-        return likecount;
-    }
-
-    public void setLikecount(Integer likecount) {
-        this.likecount = likecount;
-    }
-
-    public Integer getHid() {
-        return hid;
-    }
-
-    public void setHid(Integer hid) {
-        this.hid = hid;
-    }
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
     public String getRoomnum() {
         return roomnum;
     }
@@ -140,23 +137,11 @@ public class HouseInfo {
         this.orientation = orientation;
     }
 
-    public Integer getPrice() {
-        return price;
+    public String getText() {
+        return text;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setText(String text) {
+        this.text = text;
     }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-
-
-
 }

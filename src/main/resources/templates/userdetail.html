@@ -13,17 +13,15 @@
 <!--    border-right: 1px solid #cccccc; 竖边框横线    -->
         <div class="layui-col-xs4 " style="padding: 0 20px;font-size: 16px;line-height: 1.8;margin-top: 14px;border-right: 1px solid #cccccc;height: 400px" >
             <div style="text-align: left;padding: 20px 20px; ">
-                <img th:src="'/ioReadImage/'+${user.headportrait}" style="width:110px;height:110px;" class="layui-circle">
+                <img th:src="'/ioReadImage/'+${user.headportrait}" style="width:110px;height:110px;" class="layui-circle picture" id="picture">
                 <span></span>
                 </img>
-
             </div>
             <ul  style="text-align: left;padding: 10px 20px; ">
                 <li >电话：<span th:text="${user.phone}" ></span></li>
                 <li >名称：<span th:text="${user.name}" ></span></li>
                 <li >性别：<span th:text="${user.sex}" ></span></li>
                 <li >生日：<span th:text="${user.birthday}" ></span></li>
-<!--     <li >生日：<span th:text="${user.birthday}" th:title="${user.birthday}"></span></li>           -->
             </ul>
         </div>
         <div class="layui-col-xs8" style="margin-top: 14px;padding: 20px 10px 10px 10px">
@@ -81,6 +79,26 @@
         var upload = layui.upload;
         var layer = layui.layer;
         var $ = layui.jquery;
+
+        $(".picture").click(function () {
+            layer.open(
+                {
+                    type: 2,
+                    title: '修改头像',
+                    shadeClose: true,//点击其他地方关闭弹层
+                    maxmin: true,
+                    shade: 0.3,  //设置透明度 ，默认 0.3
+                    fixed: false,//不固定弹框 可以随意拖动
+                    area: ['400px', '400px'],
+                    content: 'headportrait2',//跳转的页面 js获取// 'user-edit.html?id='+data.uid
+                    success: function (layero, index) {
+                        // 获取子页面的iframe
+                        var iframe = window['layui-layer-iframe' + index];
+                        // // 向子页面的全局函数child传参
+                        // iframe.child(data);
+                    }
+                })
+        })
 
         //laydate
         laydate.render({

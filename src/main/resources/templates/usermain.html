@@ -9,19 +9,23 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">房屋租凭后台管理系统</div>
+        <div class="layui-logo">个人中心</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="main">主页面</a></li>
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <!--           th:text="${session.name}"     -->
-                    <p class="layui-side-user-name detail " >修改密码</p>
+                <a href="javascript:;"><!--           th:text="${session.name}"     -->
+                 <p class="layui-side-user-name detail ">基本信息</p>
                 </a>
             </li>
-            <li class="layui-nav-item"><a href="managerLogin">退出</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                <p class="layui-side-user-name userpassword " >修改密码</p>
+                </a>
+            </li>
+            <li class="layui-nav-item"><a href="index">返回主页</a></li>
         </ul>
     </div>
 
@@ -38,20 +42,13 @@
                     </a>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="" href="javascript:;">用户管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" data-id="1" data-title="用户列表" data-url="user"
-                               class="site-demo-active" data-type="tabAdd">用户列表</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
                     <a class="" href="javascript:;">房屋管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" data-id="5" data-title="待审核房源" data-url="houseinfoVerify"
-                               class="site-demo-active" data-type="tabAdd">待审核房源</a></dd>
-                        <dd><a href="javascript:;" data-id="2" data-title="已上架房源" data-url="houseinfo"
-                               class="site-demo-active" data-type="tabAdd">已上架房源</a></dd>
-                        <dd><a href="javascript:;" data-id="3" data-title="添加房源" data-url="houseadd"
+                        <dd><a href="javascript:;" data-id="2" data-title="已上架房源" data-url="houseinfo2"
+                               class="site-demo-active" data-type="tabAdd">上架房源</a></dd>
+                        <dd><a href="javascript:;" data-id="3" data-title="我的房源" data-url="houseForMyself"
+                               class="site-demo-active" data-type="tabAdd">我的房源</a></dd>
+                        <dd><a href="javascript:;" data-id="5" data-title="添加房源" data-url="houseadd"
                                class="site-demo-active" data-type="tabAdd">添加房源</a></dd>
                     </dl>
                 </li>
@@ -82,11 +79,22 @@
             layer.open(
                 {
                     type: 2, //type 2表示iframe弹窗类型；layer type一般为5种类型
-                    area: ['350px', '240px'],
+                    area: ['700px', '480px'],
                     fixed: false, //不固定
                     maxmin: true,
                     title: "会员详情",
-                    content: 'managerdetail' //iframe展示当前页面,名字是requestMappering里的值
+                    content: 'userdetail' //iframe展示当前页面,名字是requestMappering里的值
+                })
+        })
+        $(".userpassword").click(function () {
+            layer.open(
+                {
+                    type: 2, //type 2表示iframe弹窗类型；layer type一般为5种类型
+                    area: ['350px', '240px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    title: "修改密码",
+                    content: 'userpassword' //iframe展示当前页面,名字是requestMappering里的值
                 })
         })
 

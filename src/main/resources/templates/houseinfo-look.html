@@ -10,8 +10,8 @@
 
 <body>
 <form class="layui-form" action="" id="editForm">
-    <input type="hidden" name="hid" id="inputhid"/>
-    <input type="hidden" name="uid" id="inputuid"/>
+    <input type="hidden" name="id" id="inputid"/>
+    <input type="hidden" name="phone" id="inputphone"/>
     <div class="layui-form-item">
         <label class="layui-form-label">标题:</label>
         <div class="layui-input-inline">
@@ -184,8 +184,8 @@
 
             console.log(data);
             //给编辑表单赋值
-            $("#inputhid").val(data.hid);
-            $("#inputuid").val(data.uid);
+            $("#inputid").val(data.id);
+            $("#inputphone").val(data.phone);
             $("#inputtitle").val(data.title);
             $("#province").val(data.province);
             $("#city").val(data.city);

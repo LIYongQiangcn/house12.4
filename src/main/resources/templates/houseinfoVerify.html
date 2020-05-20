@@ -71,7 +71,7 @@
                         type: 'checkbox',
                         fixed: 'left',
                     }, {
-                    field: 'hid',
+                    field: 'id',
                     title: 'ID',
                 }, {
                     field: 'title',
@@ -136,7 +136,7 @@
                             url: '/house/verify',//访问后台的地址   查询所有的岗位信息
                             async: false,//  true：异步     false:同步
                             dataType: "json",//数据类型
-                            data: {hid: data.hid},
+                            data: {phone: data.phone, id:data.id},
                             success: function (data) {
                                 if (data == 1) {
                                     layer.msg('已审核!', {
@@ -160,7 +160,7 @@
                             url: '/house/noVerify',//访问后台的地址   查询所有的岗位信息
                             async: false,//  true：异步     false:同步
                             dataType: "json",//数据类型
-                            data: {uid: data.uid,hid:data.hid},
+                            data: {phone: data.phone, id:data.id},
                             success: function (data) {
                                 if (data == 1) {
                                     layer.msg('已通知!', {
@@ -173,8 +173,6 @@
                                 }
                             }
                         });
-                        // alert(datacontent["uid"]);
-                        // layer.close(index);
                     });
                     break;
             }

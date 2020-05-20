@@ -65,18 +65,18 @@
     }
 </style>
 
-<script type="text/html" id="titlebutton">
-    <button lay-event="delAll" class="layui-btn layui-btn-xs  layui-btn-sm  layui-btn-danger"><i class="layui-icon">&#xe640;</i>批量删除
-    </button>
-</script>
+<!--<script type="text/html" id="titlebutton">-->
+<!--    <button lay-event="delAll" class="layui-btn layui-btn-xs  layui-btn-sm  layui-btn-danger"><i class="layui-icon">&#xe640;</i>批量删除-->
+<!--    </button>-->
+<!--</script>-->
 <!--按钮的设置 onclick="updateButton()" -->
 <script type="text/html" id="barDemo">
     <button type="button" lay-event="edit" class="layui-btn layui-btn-normal layui-btn-xs  layui-btn-sm"><i
             class="layui-icon">&#xe642;</i>详情
     </button>
-    <button type="button" lay-event="like" class="layui-btn layui-btn-xs  layui-btn-danger">
-        <i class="layui-icon">&#xe640;</i>删除
-    </button>
+<!--    <button type="button" lay-event="like" class="layui-btn layui-btn-xs  layui-btn-danger">-->
+<!--        <i class="layui-icon">&#xe640;</i>删除-->
+<!--    </button>-->
 </script>
 
 
@@ -127,7 +127,7 @@
                     field: 'status',
                     title: '状态',
                 },
-                 {title:'操作',ixed: 'right', width:200, align: 'center', toolbar: '#barDemo'}]
+                    {title:'操作',ixed: 'right', width:200, align: 'center', toolbar: '#barDemo'}]
             ]
         });
 
@@ -144,7 +144,7 @@
             })
         })
 
-        //头工具栏事件，批量删除
+        //头工具栏事件
         table.on('toolbar(usertable)', function (obj) {
             var checkStatus = table.checkStatus("usertable")
                 , data = checkStatus.data; //获取选中的数据
@@ -152,12 +152,12 @@
                 parent.layer.msg('请先选择要删除的数据行！', {icon: 2});
                 return;
             }
-            var ids = "";
+            var uids = "";
             for (var i = 0; i <= data.length - 1; i++) {
                 if (i < data.length - 1) {
-                    ids += data[i].id + ",";
+                    uids += data[i].uid + ",";
                 } else {
-                    ids += data[i].id
+                    uids += data[i].uid
                 }
 
             }
@@ -166,10 +166,10 @@
                     layer.confirm('确定删除吗?', function (index) {
                         $.ajax({
                             type: 'post',//提交方式
-                            url: '/user/delHouseInfos',//访问后台的地址   查询所有的岗位信息
+                            url: '/user/deleteUsers',//访问后台的地址   查询所有的岗位信息
                             async: false,//  true：异步     false:同步
                             dataType: "json",//数据类型
-                            data: {ids: ids},
+                            data: {uids: uids},
                             success: function (da) {
                                 if (da == 1) {
                                     layer.msg('已删除!', {
@@ -203,7 +203,7 @@
                             url: '/house/del',//访问后台的地址   查询所有的岗位信息
                             async: false,//  true：异步     false:同步
                             dataType: "json",//数据类型
-                            data: {id: data.id},
+                            data: {hid: data.hid},
                             success: function (data) {
                                 if (data == 1) {
                                     layer.msg('已删除!', {

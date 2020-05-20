@@ -3,7 +3,6 @@ package com.example.service;
 import com.example.entity.HouseInfo;
 import com.example.mapper.HouseInfoMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -22,19 +21,36 @@ public class HouseInfoService {
     HouseInfoMapper houseInfoMapper;
 
     /**
-     * 添加房源
+     * 首页，查询所有展示
+     * @return
+     */
+    public   List<HouseInfo>  queryToWeb(){
+        return houseInfoMapper.selectHouseToWeb();
+    }
+
+
+    /**
+     * 新增
+     * @param houseInfo
+     * @return
      */
     public int addHouse(HouseInfo houseInfo){
         return houseInfoMapper.insertHouse(houseInfo);
     }
+
     /**
-     * 删除房源
+     * 删除
+     * @param id
+     * @return
      */
-    public int deleteByHid(Integer hid){
-        return houseInfoMapper.deleteHouseByHid(hid);
+    public int deleteByHid(Integer id){
+        return houseInfoMapper.deleteHouseById(id);
     }
+
     /**
-     * 房源的更新
+     * 房源更新
+     * @param houseInfo
+     * @return
      */
     public int updateByHid(HouseInfo houseInfo){
         return houseInfoMapper.updateHouseByHid(houseInfo);
@@ -54,36 +70,46 @@ public class HouseInfoService {
     }
 
     /**
-     * 带有关联的查询
+     * 审核房源
+     * @param id
      * @return
      */
-    public List<HouseInfo> query2(){
-        return houseInfoMapper.queryById();
+    public int updateStatus(Integer id){
+        return houseInfoMapper.updateStatusTrue(id);
     }
-
-    /**
-     * 根据用户id查询房源
-     */
-    public List<HouseInfo> queryMyself(Integer uid){
-        return  houseInfoMapper.queryHouseByUid(uid);
-    }
-    /**
-     * 审核房源
-     */
-    public int updateStatus(Integer hid){
-        return houseInfoMapper.updateStatus(hid);
-    }
-
 
     /**
      * 查询未审核的房源信息
+     * @return
      */
     public List<HouseInfo> queryHouse(){
         return houseInfoMapper.selectHouse();
     }
 
+    /**
+     * 主后台页面展示
+     * @return
+     */
     public List<HouseInfo> queryAllhouse(){
         return houseInfoMapper.selectAllHouse();
+    }
+
+    /**
+     * 查询自己房源
+     * @param phone
+     * @return
+     */
+    public List<HouseInfo> queryMyself(String phone){
+        return houseInfoMapper.selectMyself(phone);
+    }
+
+    /**
+     * 根据id查询房源
+     * @param id
+     * @return
+     */
+    public HouseInfo queryById(Integer id){
+        return houseInfoMapper.selectHouseByHid(id);
     }
 
 }

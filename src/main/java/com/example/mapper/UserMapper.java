@@ -1,5 +1,6 @@
 package com.example.mapper;
 
+import com.example.entity.Manager;
 import com.example.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,6 +19,8 @@ public interface UserMapper {
 
     /**
      * 根据uid查询电话号码
+     * @param uid
+     * @return
      */
     User queryEmailByUid(Integer uid);
 
@@ -59,6 +62,24 @@ public interface UserMapper {
 
     /**
      * 判断手机号是否已经被注册
+     * @param phone
+     * @return
      */
     User selectUserByPhone(String phone);
+
+    /**
+     * 修改密码
+     * @param user
+     * @return
+     */
+    int updatePassword(User user);
+
+    /**
+     * 根据id查询user
+     * @param uid
+     * @return
+     */
+    User selectUserById(Integer uid);
+
+
 }

@@ -8,7 +8,7 @@ package com.example.entity;
  */
 public class Manager {
     Integer mid;
-    String munber;
+    String number;
     String mpassword;
 
     public Integer getMid() {
@@ -19,12 +19,12 @@ public class Manager {
         this.mid = mid;
     }
 
-    public String getMunber() {
-        return munber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setMunber(String munber) {
-        this.munber = munber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getMpassword() {

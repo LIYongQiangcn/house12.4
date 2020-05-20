@@ -111,7 +111,6 @@
                     field: 'headportrait',
                     title: '头像',
                     templet: "#imgtmp",
-
                 },{
                     field: 'sex',
                     title: '性别',
@@ -173,8 +172,8 @@
                                 if (da == 1) {
                                     layer.msg('已删除!', {
                                         icon: 1, time: 1000, end: function () {
-                                            obj.del();
-                                            // window.location.reload();
+                                            // obj.del();
+                                            window.location.reload();
                                         }
                                     });
                                 } else {

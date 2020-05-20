@@ -52,6 +52,8 @@ public class UserService {
 
     /**
      * 用户单个删除
+     * @param uid
+     * @return
      */
     public int delete(Integer uid){
         return userMapper.deleteById(uid);
@@ -59,37 +61,66 @@ public class UserService {
 
     /**
      * 用户信息修改
+     * @param user
+     * @return
      */
     public int update(User user){
         return userMapper.updateUserByUid(user);
     }
 
     /**
-     * 头像修改
+     * 修改头像
+     * @param user
+     * @return
      */
     public int updateHead(User user){
         return userMapper.updateUserPorByUid(user);
     }
 
     /**
+     * 修改密码
+     * @param user
+     * @return
+     */
+    public int updatePassword(User user) {
+        return userMapper.updatePassword(user);
+    }
+
+    /**
      * 用户登录
+     * @param phone
+     * @param password
+     * @return
      */
     public User login(String phone,String password){
         User user = userMapper.userlogin(phone,password);
         return user;
     }
 
-    /**
-     * 根据uid查询信息
-     */
-    public User queryByUid(Integer uid){
-        return  userMapper.queryEmailByUid(uid);
-    }
+//    /**
+//     * 根据用户id查询email
+//     * @param uid
+//     * @return
+//     */
+//    public User queryByUid(String Phone){
+//        return  userMapper.queryEmailByUid(uid);
+//    }
 
     /**
-     *判断手机号是否已经被注册
+     * 校验手机号是否被注册
+     * @param phone
+     * @return
      */
     public User queryPhone(String phone){
         return userMapper.selectUserByPhone(phone);
+    }
+
+    /**
+     * 根据id查询user
+     * @param uid
+     * @return
+     */
+    public User selectByUid(Integer uid){
+        return userMapper.selectUserById(uid);
     }
 }

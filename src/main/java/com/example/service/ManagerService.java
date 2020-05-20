@@ -21,8 +21,8 @@ public class ManagerService {
     /**
      * 管理员登录
      */
-    public Manager login(String munber , String mpassword ){
-        Manager manager = managerMapper.managerlogin(munber,mpassword);
+    public Manager login(String number , String mpassword ){
+        Manager manager = managerMapper.managerlogin(number,mpassword);
         return manager;
     }
 

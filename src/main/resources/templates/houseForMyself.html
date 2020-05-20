@@ -22,12 +22,7 @@
     </style>
 </head>
 <body>
-<!--<div class="layui-tab layui-tab-brief">-->
-<!--    <ul class="layui-tab-title">-->
-<!--        <li class="layui-this">用户列表</li>-->
-<!--    </ul>-->
-<!--</div>-->
-<!--<div id="test1"></div>-->
+
 <div style="width: 100%">
     <div class="layui-input-inline">
         <form class="layui-form">
@@ -93,7 +88,7 @@
         table.render({
             code: '0',
             elem: '#usertable',//demo是table的id名
-            url: '/house/query',//数据接口
+            url: '/house/queryMyself',//数据接口
             title: '房源表',
             toolbar: '#titlebutton',
             page: true,
@@ -127,7 +122,7 @@
                     field: 'status',
                     title: '状态',
                 },
-                 {title:'操作',ixed: 'right', width:200, align: 'center', toolbar: '#barDemo'}]
+                    {title:'操作',ixed: 'right', width:200, align: 'center', toolbar: '#barDemo'}]
             ]
         });
 
