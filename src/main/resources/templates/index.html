@@ -37,6 +37,7 @@
 
 		});
 	</script>
+
 </head>
 <body>
 
@@ -71,7 +72,7 @@
 			<ul class="properties_list"  >
 				<li th:each="h,iterStat:${houseList}">
 					<a th:href="'http://localhost:8080/housedetail?id='+${h.id}">
-						<img th:src="${h.picture}"   alt="" title="" class="property_img" />
+						<img th:src="${h.picture}"  alt="" title="" class="property_img" />
 					</a>
 					<a><span class="price" th:text="${h.price}">价格:</span></a>
 					<div class="property_details">

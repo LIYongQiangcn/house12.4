@@ -83,6 +83,8 @@ public class UserService {
      * @return
      */
     public int updatePassword(User user) {
+        String pwd = Md5Util.md5(user.getPassword());
+        user.setPassword(pwd);
         return userMapper.updatePassword(user);
     }
 

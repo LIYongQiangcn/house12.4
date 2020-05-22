@@ -166,7 +166,12 @@ public class PageController {
      * @return
      */
     @RequestMapping("/main")
-    public String main(Model m){
+    public String main(Model m,HttpServletRequest request){
+        Manager manager = (Manager) session.getAttribute("loginManager");
+        if (manager ==null){
+            return "errorToIndex";
+        }
+//        return "user";
         return "main";
     }
 
@@ -196,8 +201,14 @@ public class PageController {
      * @return
      */
     @RequestMapping("/user")
-    public String user(){
+    public String user(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Manager manager = (Manager) session.getAttribute("loginManager");
+        if (manager ==null){
+            return "errorToIndex";
+        }
         return "user";
+//        return "user";
     }
 
     /**
@@ -223,8 +234,15 @@ public class PageController {
      * @return
      */
     @RequestMapping("/houseinfoVerify")
-    public String houseVerify(){
+    public String houseVerify(HttpServletRequest request){
+        HttpSession session = request.getSession();
+//        User user = (User) session.getAttribute("loginUser");
+        Manager manager = (Manager) session.getAttribute("loginManager");
+        if ( manager ==null){
+            return "errorToIndex";
+        }
         return "houseinfoVerify";
+//        return "houseinfoVerify";
     }
 
     /**
@@ -241,8 +259,15 @@ public class PageController {
      * @return
      */
     @RequestMapping("/houseadd")
-    public String addhouse(){
-        return  "houseadd";
+    public String addhouse(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("loginUser");
+        Manager manager = (Manager) session.getAttribute("loginManager");
+        if (user == null && manager ==null){
+            return "errorToIndex";
+        }
+        return "houseadd";
+//        return  "houseadd";
     }
 
 

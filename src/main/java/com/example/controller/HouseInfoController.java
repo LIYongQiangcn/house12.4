@@ -191,6 +191,9 @@ public class HouseInfoController {
         }else if (type.equals("1")){
             list = houseInfoService.queryByTitle(content);
         }else {
+            if (content.isEmpty()) {
+                content = "9999999";
+            }
             list = houseInfoService.queryByPrice(content);
         }
         //对查询后的数据进行包装
