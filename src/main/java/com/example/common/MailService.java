@@ -8,7 +8,12 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-
+/**
+ * @author {李永强}
+ * @Title HousePhoto
+ * @Description
+ * @date 2019/12/5
+ */
 @Service("mailService")
 public class MailService {
     @Value("${spring.mail.username}")
