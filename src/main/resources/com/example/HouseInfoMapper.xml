@@ -64,7 +64,7 @@
         where phone=#{phone}
     </select>
 
-    <insert id="insertHouse" parameterType="com.example.entity.HouseInfo">
+    <insert id="insertHouse" parameterType="com.example.entity.HouseInfo" useGeneratedKeys="true"  keyProperty="id">
         insert into houseinfo(phone,title,picture,province,city,region,village,area,roomnum,floor,orientation,price,text)
         values (#{phone},#{title},#{picture},#{province},#{city},#{region},#{village},#{area},#{roomnum},#{floor},#{orientation},#{price},#{text})
     </insert>

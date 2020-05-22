@@ -7,24 +7,24 @@ package com.example.entity;
  * @date 2019/12/5
  */
 public class HousePhoto {
-    Integer pid;
-    Integer phid;
+    Integer id;
+    Integer hid;
     String photo;
 
-    public Integer getPhid() {
-        return phid;
+    public Integer getHid() {
+        return hid;
     }
 
-    public void setPhid(Integer phid) {
-        this.phid = phid;
+    public void setHid(Integer hid) {
+        this.hid = hid;
     }
 
-    public Integer getPid() {
-        return pid;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getPhoto() {

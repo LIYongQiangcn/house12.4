@@ -24,16 +24,24 @@
             <input type="text" name="title"  placeholder="请输入房源出售标题" autocomplete="off" class="layui-input">
         </div>
     </div>
-    <input type="hidden" name="picture" class="image">
-    <div class="layui-form-item">
-        <label class="layui-form-label ">照片:</label>
-        <div class="layui-input-block">
-            <div class="layui-upload-list">
-                <img class="layui-upload-img" id="demo1"  style="width:100px;height:100px;">
-            </div>
-            <button type="button" class="layui-btn" id="test2">上传图片</button>
-        </div>
+
+    <input  name="pictures" class="image">
+    <div class="layui-upload">
+        <button type="button" class="layui-btn" id="test2">多图片上传</button>
+        <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+            预览图：
+            <div class="layui-upload-list" id="demo2"></div>
+        </blockquote>
     </div>
+<!--    <div class="layui-form-item">-->
+<!--        <label class="layui-form-label ">照片:</label>-->
+<!--        <div class="layui-input-block">-->
+<!--            <div class="layui-upload-list">-->
+<!--                <img class="layui-upload-img" id="demo1"  style="width:100px;height:100px;">-->
+<!--            </div>-->
+<!--            <button type="button" class="layui-btn" id="test2">上传图片</button>-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="layui-form-item" id="addressDiv">
         <label class="layui-form-label">省份:</label>
         <div class="layui-input-inline">
@@ -114,9 +122,6 @@
         //带初始值进行初始化
         pca.init('select[name=province]', 'select[name=city]', 'select[name=region]', '全部', '全部', '全部');
 
-        //不带初始值
-        // pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]');
-
         //输入提示
         $("#address").bind('input propertychange', function () {
                 var address = document.getElementById("address").value;
@@ -196,43 +201,68 @@
         var laydate = layui.laydate;
         var upload = layui.upload;
         var layer = layui.layer;
+        var imgs = null ;
 
-        var uploadInst = upload.render({
+        //多图片上传
+        upload.render({
             elem: '#test2'
-            ,url: '/upload/'
+            ,url: '/upload/' //改成您自己的上传接口
             ,accept:'images'
-            // ,auto:false
-            ,size:50000
-            ,number:0
+            ,multiple: true
             ,before: function(obj){
-                //文件上传前的回调
+                //预读本地文件示例，不支持ie8
                 obj.preview(function(index, file, result){
-                    // $('#demo1').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">') 多图片上传
-                    $('#demo1').attr('src', result);
+                    $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" style="width:100px;height:100px;" class="layui-upload-img">')
                 });
             }
             ,done: function(res){
-                //如果上传失败
-                if(res.code > 0){
-                    return layer.msg('上传失败');
+                if ( imgs == null) {
+                    imgs = res.data.src;
+                } else {
+                    imgs = imgs + "," + res.data.src;
                 }
-                //上传成功
-                var demoText = $('#demoText');
-                demoText.html('<span style="color: #4cae4c;">上传成功</span>');
+                var imgurls = $(".image");
+                imgurls.attr("value",imgs);
 
-                var fileupload = $(".image");
-                fileupload.attr("value",res.data.src);
-                console.log(fileupload.attr("value"));
-            }
-            ,error: function(){
-                //演示失败状态，并实现重传
-                var demoText = $('#demoText');
-                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                demoText.find('.demo-reload').on('click', function(){
-                    uploadInst.upload();
-                });
             }
         });
+
+        // var uploadInst = upload.render({
+        //     elem: '#test2'
+        //     ,url: '/upload/'
+        //     ,accept:'images'
+        //     // ,auto:false
+        //     ,size:50000
+        //     ,number:0
+        //     ,before: function(obj){
+        //         //文件上传前的回调
+        //         obj.preview(function(index, file, result){
+        //             // $('#demo1').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">') // 多图片上传
+        //             $('#demo1').attr('src', result);
+        //         });
+        //     }
+        //     ,done: function(res){
+        //         //如果上传失败
+        //         if(res.code > 0){
+        //             return layer.msg('上传失败');
+        //         }
+        //         //上传成功
+        //         var demoText = $('#demoText');
+        //         demoText.html('<span style="color: #4cae4c;">上传成功</span>');
+        //
+        //         var fileupload = $(".image");
+        //         fileupload.attr("value",res.data.src);
+        //         console.log(fileupload.attr("value"));
+        //     }
+        //     ,error: function(){
+        //         //演示失败状态，并实现重传
+        //         var demoText = $('#demoText');
+        //         demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+        //         demoText.find('.demo-reload').on('click', function(){
+        //             uploadInst.upload();
+        //         });
+        //     }
+        // });
 
         //laydate
         laydate.render({

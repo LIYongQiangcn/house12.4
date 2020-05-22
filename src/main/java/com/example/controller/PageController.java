@@ -1,13 +1,16 @@
 package com.example.controller;
 
 import com.example.entity.HouseInfo;
+import com.example.entity.HousePhoto;
 import com.example.entity.Manager;
 import com.example.entity.User;
 import com.example.service.HouseInfoService;
+import com.example.service.HousePhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,6 +23,8 @@ public class PageController {
     private HttpSession session;
     @Autowired
     HouseInfoService houseInfoService;
+    @Autowired
+    HousePhotoService housePhotoService;
 
     /**
      * 前台主页面
@@ -29,6 +34,14 @@ public class PageController {
         List<HouseInfo> list =  houseInfoService.queryToWeb();
         model.addAttribute("houseList",list);
         return "index";
+    }
+    @RequestMapping("/housedetail")
+    public String houseDetail(@RequestParam("id") Integer id, Model model){
+        HouseInfo houseInfo = houseInfoService.queryById(id);
+        List<HousePhoto> housePhotos = housePhotoService.queryImg(id);
+        model.addAttribute("info",houseInfo);
+        model.addAttribute("img",housePhotos);
+        return "housedetail";
     }
 
 
@@ -123,6 +136,15 @@ public class PageController {
     @RequestMapping("/houseinfo2")
     public String house2(){
         return  "houseinfo2";
+    }
+
+    /**
+     * 用户后台中心:查看房源详情
+     * @return
+     */
+    @RequestMapping("/houseinfo-look2")
+    public String houselook2(){
+        return  "houseinfo-look2";
     }
 
     /**

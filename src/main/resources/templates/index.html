@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>La Casa - Real Estate HTML5 Home Page Template</title>
+	<title>房屋租凭网</title>
 	<meta charset="utf-8">
 	<meta name="author" content="">
 	<meta name="description" content="La casa free real state fully responsive html5/css3 home page website template"/>
@@ -13,10 +13,6 @@
 	<script type="text/javascript" src="/pxnt_7_La-Casa/js/jquery.js"></script>
 	<script type="text/javascript" src="/pxnt_7_La-Casa/js/main.js"></script>
 	<script type="text/javascript" src="/layui/jquery-3.2.1.min.js"></script>
-	<!--头像显示路径配置-->
-	<script type="text/html" id="imgtmp">
-		<img src="/ioReadImage/{{d.picture}}"  style="width:25px;height:25px;"/>
-	</script>
 
 	<script type="text/javascript" defer="true">
 		$(document).ready(function(){
@@ -69,12 +65,13 @@
 			</section>
 	</section>
 
+	<div class="tlinks">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
 	<section class="listings">
 		<div class="wrapper">
-			<ul class="properties_list" th:each="h,iterStat:${houseList}" style="">
-				<li>
-					<a>
-						<img src="/pxnt_7_La-Casa/img/property_2.jpg" alt="" title="" class="property_img" />
+			<ul class="properties_list"  >
+				<li th:each="h,iterStat:${houseList}">
+					<a th:href="'http://localhost:8080/housedetail?id='+${h.id}">
+						<img th:src="${h.picture}"   alt="" title="" class="property_img" />
 					</a>
 					<a><span class="price" th:text="${h.price}">价格:</span></a>
 					<div class="property_details">

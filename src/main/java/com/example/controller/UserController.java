@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.aliyuncs.exceptions.ClientException;
+import com.example.common.Md5Util;
 import com.example.entity.Manager;
 import com.example.entity.User;
 import com.example.service.UserService;
@@ -108,7 +109,7 @@ public class UserController {
     @RequestMapping(value = "/user/login")
     public int userLogin(String phone, String password,String verify, HttpSession session) {
         ModelAndView mv = new ModelAndView();
-        User user = userService.login(phone, password);
+        User user = userService.login(phone, Md5Util.md5(password));
         //校验验证码
         String inputStr = "false";
         if ( !verify.isEmpty() ) {

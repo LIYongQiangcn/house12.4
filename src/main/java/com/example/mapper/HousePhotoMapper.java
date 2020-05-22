@@ -3,6 +3,8 @@ package com.example.mapper;
 import com.example.entity.HousePhoto;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author {李永强}
  * @Title HousePhotoMapper
@@ -12,4 +14,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface HousePhotoMapper {
    int insertPhoto(HousePhoto housePhoto);
+   List<HousePhoto> selectImg(Integer hid);
 }

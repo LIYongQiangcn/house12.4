@@ -8,6 +8,7 @@ import com.example.service.HousePhotoService;
 import com.example.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -81,9 +82,22 @@ public class HouseInfoController {
      * @return
      */
     @RequestMapping("/house/add")
-    public int addHouse(HouseInfo houseInfo){
+    public int addHouse(HouseRequest houseRequest){
+        String[] strings = houseRequest.getPictures().split(",");
+        HouseInfo houseInfo = new HouseInfo();
+        BeanUtils.copyProperties(houseRequest,houseInfo);
+        houseInfo.setPicture(strings[0]);
         try {
-            houseInfoService.addHouse(houseInfo);
+            int result = houseInfoService.addHouse(houseInfo);
+            if (result == 1) {
+                //
+                for (String img : strings) {
+                    HousePhoto housePhoto = new HousePhoto();
+                    housePhoto.setHid(houseInfo.getId());
+                    housePhoto.setPhoto(img);
+                    housePhotoService.addPhoto(housePhoto);
+                }
+            }
             return 1;
         }catch (Exception e) {
             return 0;

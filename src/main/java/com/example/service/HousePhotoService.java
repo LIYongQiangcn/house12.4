@@ -5,6 +5,7 @@ import com.example.mapper.HousePhotoMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author {李永强}
@@ -20,5 +21,9 @@ public class HousePhotoService {
 
     public int addPhoto(HousePhoto housePhoto){
         return  housePhotoMapper.insertPhoto(housePhoto);
+    }
+
+    public List<HousePhoto> queryImg(Integer hid){
+        return housePhotoMapper.selectImg(hid);
     }
 }
